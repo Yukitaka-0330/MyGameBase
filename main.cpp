@@ -20,16 +20,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     wc.lpszMenuName = NULL;                     //メニュー（なし）
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); //背景（白）
+    wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH); //背景（白）
     RegisterClassEx(&wc);  //クラスを登録
 
     //ウィンドウを作成
     HWND hWnd = CreateWindow(
         "SampleGame",         //ウィンドウクラス名
         "サンプルゲーム",     //タイトルバーに表示する内容
-        WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
-        CW_USEDEFAULT,       //表示位置左（おまかせ）
-        CW_USEDEFAULT,       //表示位置上（おまかせ）
+        WS_OVERLAPPEDWINDOW,
+       // WS_OVERLAPPEDWINDOW | WS_VISIBLE,//スタイル（普通のウィンドウ） //|VISIBLE,を追加することで最初から表示できる。
+        //CW_USEDEFAULT,       //表示位置左（おまかせ）
+        //CW_USEDEFAULT,       //表示位置上（おまかせ）
+        0,
+        0,
         800,                 //ウィンドウ幅
         600,                 //ウィンドウ高さ
         NULL,                //親ウインドウ（なし）
@@ -70,8 +73,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
+  
     case WM_DESTROY:
-        PostQuitMessage(0);  //プログラム終了
+       PostQuitMessage(0);  //プログラム終了
         return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
