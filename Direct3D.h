@@ -8,6 +8,8 @@
 namespace Direct3D
 
 {
+	extern ID3D11Device* pDevice;
+
 	//初期化
 	//winW ウィンドウ幅 winH ウィンドウ高さ
 	void Initialize(int winW, int winH, HWND hWnd);
