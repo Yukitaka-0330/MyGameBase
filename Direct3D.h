@@ -6,9 +6,9 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 namespace Direct3D
-
 {
 	extern ID3D11Device* pDevice;
+	extern ID3D11DeviceContext* pContext;		//デバイスコンテキスト
 
 	//初期化
 	//winW ウィンドウ幅 winH ウィンドウ高さ
