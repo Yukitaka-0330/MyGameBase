@@ -62,7 +62,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     //Direct3D‰Šú‰»
     Direct3D::Initialize(winW, winH, hWnd);
-
+   
     q->Initialize();
 
 

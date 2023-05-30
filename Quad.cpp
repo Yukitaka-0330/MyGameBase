@@ -13,19 +13,22 @@ void Quad::Initialize()
 	// 頂点情報
 	XMVECTOR vertices[] =
 	{
+		
 		XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),	// 四角形の頂点（左上）
 		XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	// 四角形の頂点（右上）
 		XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（右下）
-		XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（左下）		
+		XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// 四角形の頂点（左下）	
+		//XMVectorSet(0.0f ,3.0f ,0.0f ,0.0f),
+		
 	};
 
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = sizeof(vertices);
-	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
-	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bd_vertex.CPUAccessFlags = 0;
-	bd_vertex.MiscFlags = 0;
+	bd_vertex.ByteWidth = sizeof(vertices);  //ByteWidthがバッファーのサイズ
+	bd_vertex.Usage = D3D11_USAGE_DEFAULT;	 //バッファーの読み取りと書き込み方法を特定
+	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;		//バッファーをパイプラインに結びつける
+	bd_vertex.CPUAccessFlags = 0;	//CPUアクセスが必要ない場合は0
+	bd_vertex.MiscFlags = 0;		
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
@@ -33,6 +36,10 @@ void Quad::Initialize()
 
 	//インデックス情報
 	int index[] = { 0,2,3, 0,1,2 };
+
+	//int index[] = { 0,2,3, 0,1,2, 0,4,1};
+
+	
 
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
@@ -91,6 +98,7 @@ void Quad::Draw()
 	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
+	//Direct3D::pContext->DrawIndexed(9, 0, 0);
 	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }
 

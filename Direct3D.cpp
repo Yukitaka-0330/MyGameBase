@@ -117,7 +117,7 @@ void Direct3D::InitShader()
     D3D11_RASTERIZER_DESC rdc = {};
     rdc.CullMode = D3D11_CULL_BACK;
     rdc.FillMode = D3D11_FILL_SOLID;
-    rdc.FrontCounterClockwise = FALSE;
+    rdc.FrontCounterClockwise = FALSE; //Clockwise 時計回り  CounterClockwise 反時計回り
     pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
 
     //それぞれをデバイスコンテキストにセット
