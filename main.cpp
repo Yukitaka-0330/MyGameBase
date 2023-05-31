@@ -30,7 +30,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     wc.lpszMenuName = NULL;                     //メニュー（なし）
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
-    wc.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH); //背景（白）
+    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); //背景（白）
     RegisterClassEx(&wc);  //クラスを登録
 
     //ウィンドウサイズの計算
@@ -44,7 +44,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         WIN_CLASS_NAME,         //ウィンドウクラス名
         TITLE_NAME,     //タイトルバーに表示する内容
         WS_OVERLAPPEDWINDOW,
-       // WS_OVERLAPPEDWINDOW | WS_VISIBLE,//スタイル（普通のウィンドウ） //|VISIBLE,を追加することで最初から表示できる。
+        //WS_OVERLAPPEDWINDOW | WS_VISIBLE,//スタイル（普通のウィンドウ） //|VISIBLE,を追加することで最初から表示できる。
         CW_USEDEFAULT,       //表示位置左（おまかせ）
         CW_USEDEFAULT,       //表示位置上（おまかせ）
         winW,                 //ウィンドウ幅
@@ -56,7 +56,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     );
 
     q = new Quad;
-
     //ウィンドウを表示
     ShowWindow(hWnd, nCmdShow);
 
@@ -83,16 +82,20 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         {
             //ゲームの処理
             Direct3D::BeginDraw();
-            q->Draw(); //QuadをDraw
+           
 
             //描画処理
+            q->Draw(); //QuadをDraw
             Direct3D::EndDraw();
           
         }
     }
-
+    
     Direct3D::Release();
-    q->Release();
+    SAFE_RELEASE(q);
+    SAFE_DELETE(q);
+    //q->Release();
+    //delete q;
     return 0;
 }
 
