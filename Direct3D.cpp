@@ -177,7 +177,7 @@ HRESULT Direct3D::InitShader()
     rdc.FillMode = D3D11_FILL_SOLID;
     rdc.FrontCounterClockwise = FALSE; //Clockwise 時計回り  CounterClockwise 反時計回り
     hr = pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
-    if (SUCCEEDED(hr))
+    if (FAILED(hr))
     {
         //エラー処理
         MessageBox(nullptr, "ラスタライザの作成に失敗しました", "エラー", MB_OK);
