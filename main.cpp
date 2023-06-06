@@ -10,6 +10,7 @@ const char* TITLE_NAME = "サンプルゲーム";  //タイトル名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
+
 Quad *q;
 
 //プロトタイプ宣言
@@ -63,11 +64,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     HRESULT hr; //こっから下はhr使えるよ
     //Direct3D初期化
     hr = Direct3D::Initialize(winW, winH, hWnd);
-    Camera::Initialize();
     if (FAILED(hr))
     {
         PostQuitMessage(0);  //プログラム終了
     }
+
+    Camera::Initialize();
+
+    /*Camera::SetPosition(XMFLOAT3(0, 0, 0));
+    Camera::SetTarget(XMFLOAT3(0, 0, 0));*/
+   
 
     q = new Quad;
    hr = q->Initialize();
@@ -76,7 +82,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
        PostQuitMessage(0);  //プログラム終了
    }
 
-
+   
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -92,13 +98,31 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         //メッセージなし
         else
         {
+            Camera::Update();
+
             //ゲームの処理
             Direct3D::BeginDraw();
-            Camera::Update();
+          
            
 
             //描画処理
-            q->Draw(); //QuadをDraw
+            static float n = 1;
+            n += 0.5;
+            //回転
+             XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(n));
+            // q->Draw(mat);
+            
+            //左右
+            XMMATRIX matT = XMMatrixTranslation(0 ,0 ,0);
+            //q->Draw(mat);
+           
+            //拡大縮小
+            //XMMATRIX matS = XMMatrixScaling(1, 3, 1); //0だと表示されない
+
+            XMMATRIX mat = matT * matR;
+            q->Draw(mat);
+
+            //q->Draw(); //QuadをDraw
             Direct3D::EndDraw();
           
         }

@@ -96,7 +96,7 @@ HRESULT Quad::Initialize()
 	return S_OK;
 }
 
-void Quad::Draw()
+void Quad::Draw(XMMATRIX &worldMatrix)
 {
 	//コンスタントバッファに渡す情報
 	//XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
@@ -112,7 +112,7 @@ void Quad::Draw()
 	//ニアクリップ面とファークリップ面の距離はなるべく短くする　なぜか距離のずれが生じる　物体が埋まっちゃ足りしてちらつくようになる　<- zファイティング
 
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matWVP = XMMatrixTranspose(worldMatrix *Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	//cb.matWVP = XMMatrixTranspose(view * proj);
 
 	D3D11_MAPPED_SUBRESOURCE pdata;

@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-namespace 
+namespace Camera
 {
 	//変数
 	XMVECTOR position_;	//カメラの位置（視点）
@@ -33,11 +33,22 @@ void Camera::SetPosition(XMVECTOR position)
 	position_ = position;
 }
 
+void Camera::SetPosition(XMFLOAT3 position)
+{
+	SetPosition(XMLoadFloat3(&position)); //オーバーロードするときはこのやり方で書いたほうがいい
+	//何か仕様変更があったときに関数一個一個直さなけらべならないので、代表格を決めておいてその代表を置くようにしておく
+}
+
 //焦点を設定
 void Camera::SetTarget(XMVECTOR target)
 {
 	
 	target_ = target;
+}
+
+void Camera::SetTarget(XMFLOAT3 target)
+{
+	SetTarget(XMLoadFloat3(&target));
 }
 
 //ビュー行列を取得
