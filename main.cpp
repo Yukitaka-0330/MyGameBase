@@ -1,7 +1,8 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-#include"Quad.h"
+#include "Camera.h"
+#include "Quad.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -62,6 +63,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     HRESULT hr; //こっから下はhr使えるよ
     //Direct3D初期化
     hr = Direct3D::Initialize(winW, winH, hWnd);
+    Camera::Initialize();
     if (FAILED(hr))
     {
         PostQuitMessage(0);  //プログラム終了
@@ -92,6 +94,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         {
             //ゲームの処理
             Direct3D::BeginDraw();
+            Camera::Update();
            
 
             //描画処理

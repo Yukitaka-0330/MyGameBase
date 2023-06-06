@@ -1,4 +1,5 @@
 #include "Quad.h"
+#include "Camera.h"
 
 Quad::Quad():pVertexBuffer_(nullptr), pIndexBuffer_(nullptr),pConstantBuffer_(nullptr)
 {
@@ -98,13 +99,21 @@ HRESULT Quad::Initialize()
 void Quad::Draw()
 {
 	//コンスタントバッファに渡す情報
-	XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
-	XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
-	XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
+	//XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
+	//XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
+	//XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列 //カメラから見ての拡張するためのもの  //XMVectorSetはカメラの上方向
+	//XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列 //遠近感をつける //第一引数　画角、視野角をラジアンで表現している
+	//第二引数 アスペクト比 第三引数　ニアクリップ面　第四引数 ファークリップ面
+	//カメラ内に収めるならx軸が -1から1 y軸が-1から1 z軸が-1から1
+	//視野角を狭くするとズームすることになる　遠くのものと近くのものの差が変わらなくなる　遠近感がなくなる
+	/*カメラの表示距離は近い時も遠い時も決めないといけない
+	遠い時に設定しないとどこまでも見えてしまうため
+	近い時はある程度カメラとの距離がないと距離を圧縮して表示できなくなるから*/
+	//ニアクリップ面とファークリップ面の距離はなるべく短くする　なぜか距離のずれが生じる　物体が埋まっちゃ足りしてちらつくようになる　<- zファイティング
 
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(view * proj);
+	cb.matWVP = XMMatrixTranspose(Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	//cb.matWVP = XMMatrixTranspose(view * proj);
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
