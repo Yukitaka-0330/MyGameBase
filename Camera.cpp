@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-namespace
+namespace 
 {
 	//変数
 	XMVECTOR position_;	//カメラの位置（視点）
