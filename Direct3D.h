@@ -11,8 +11,8 @@
 
 namespace Direct3D
 {
-	extern ID3D11Device* pDevice;
-	extern ID3D11DeviceContext* pContext;		//デバイスコンテキスト
+	extern ID3D11Device* pDevice_;
+	extern ID3D11DeviceContext* pContext_;		//デバイスコンテキスト
 
 	//初期化
 	//winW ウィンドウ幅 winH ウィンドウ高さ

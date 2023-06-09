@@ -121,6 +121,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             XMMATRIX mat = matT * matR;
             q->Draw(mat);
+           // q->Draw(matT);
 
             //q->Draw(); //Quad‚ğDraw
             Direct3D::EndDraw();
