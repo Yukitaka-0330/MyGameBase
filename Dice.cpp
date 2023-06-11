@@ -18,14 +18,14 @@ HRESULT Dice::Initialize()
 	{
 
 		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 2.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
 		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
 
 		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),},//四角形の頂点（右奥上）,テクスチャの座標 4 z軸+で奥
 		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),},//四角形の頂点（右奥下）,テクスチャの座標 5 z軸+で奥
 		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),},//四角形の頂点（左奥上）,テクスチャの座標 6 z軸+で奥
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),}//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),},//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
 
 
 	};
@@ -52,9 +52,12 @@ HRESULT Dice::Initialize()
 
 
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2, //前面
-					1,5,2, 1,4,5, //右面
-				    0,7,3, 0,6,7  //左面
+	int index[] = { 0,2,3, 0,1,2, //0,3,2, 0,2,1,//前面
+					1,5,2, 1,4,5, //1,2,5, 1,5,4, //右面
+				    0,7,3, 0,6,7, //0,3,7, 0,7,6, //左面
+					6,1,0, 6,4,1, //6,0,1, 6,1,4,//上面
+					7,2,3, 7,5,2, //7,3,2, 7,2,5,//下面
+					6,5,7, 6,4,5, //6,7,5, 6,5,4,//後面
 					};
 
 	//int index[] = { 0,2,3, 0,1,2, 0,4,1};
@@ -155,7 +158,7 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
 	//Direct3D::pContext_->DrawIndexed(9, 0, 0);
-	Direct3D::pContext_->DrawIndexed(18, 0, 0);
+	Direct3D::pContext_->DrawIndexed(72, 0, 0);
 }
 
 void Dice::Release()
