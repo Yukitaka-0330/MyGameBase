@@ -18,14 +18,14 @@ HRESULT Dice::Initialize()
 	{
 
 		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 2.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
-		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
+		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
 
-		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),},//四角形の頂点（右奥上）,テクスチャの座標 4 z軸+で奥
-		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),},//四角形の頂点（右奥下）,テクスチャの座標 5 z軸+で奥
-		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),},//四角形の頂点（左奥上）,テクスチャの座標 6 z軸+で奥
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),},//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 4 z軸+で奥
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 5 z軸+で奥
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 6 z軸+で奥
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
 
 
 	};
