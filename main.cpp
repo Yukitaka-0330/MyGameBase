@@ -125,7 +125,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //Šg‘åk¬
             //XMMATRIX matS = XMMatrixScaling(1, 3, 1); //0‚¾‚Æ•\Ž¦‚³‚ê‚È‚¢
 
-            XMMATRIX mat = matT * matR;
+            XMMATRIX mat = matT * matRx;
            // q->Draw(mat);
            // q->Draw(matT);
             d->Draw(mat);
