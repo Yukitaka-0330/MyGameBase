@@ -17,26 +17,41 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 
-		//{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
-		//{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
-		//{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
-		//{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
-
-		//{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.5f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 4 z軸+で奥
-		//{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.5f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 5 z軸+で奥
-		//{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.75f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 6 z軸+で奥
-		//{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.75f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
-
+		//面1
 		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
 		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
 		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
 		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
 
-		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.5f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 4 z軸+で奥
-		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.5f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 5 z軸+で奥
-		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.75f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 6 z軸+で奥
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.75f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 7 z軸+で奥
-		
+		//面2
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 4
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 5
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 6 z軸+で奥
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 7 z軸+で奥
+
+		//面3
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 8 z軸+で奥
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 9 z軸+で奥
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 10 z軸+で奥
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 11 z軸+で奥
+
+		//面4
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上)12
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下)13
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 四角形の頂点（左上)14
+		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f) },// 四角形の頂点（左下)15
+	
+		//面5
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥上)16
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.5f, 0.0f)},//四角形の頂点（右奥上）17
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）18
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上)19
+
+		//面6
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下）20
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）21
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）22
+		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下)23
 	};
 
 	// 頂点データ用バッファの設定
@@ -62,12 +77,13 @@ HRESULT Dice::Initialize()
 
 	//インデックス情報
 	
-	int index[] = { 0,2,3, 0,1,2,//前面
-					0,4,1, 0,6,4,//上面
-					6,7,5, 6,5,4,//後面
-					7,3,2, 7,2,5,//下面
-					1,5,2, 1,4,5,//右面
-					6,3,7, 6,0,3,//左面
+	int index[] = {
+					0,2,3, 0,1,2,//前面
+					4,7,5, 4,6,7,//右面
+					8,11,9, 8,10,11,//後面
+					12,15,13, 12,14,15,//左面
+					16,18,19, 16,17,18,//上面
+					20,23,22, 20,22,21,//下面
 	};
 
 
@@ -166,7 +182,7 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
 	//Direct3D::pContext_->DrawIndexed(9, 0, 0);
-	Direct3D::pContext_->DrawIndexed(72, 0, 0);
+	Direct3D::pContext_->DrawIndexed(36, 0, 0);
 }
 
 void Dice::Release()
