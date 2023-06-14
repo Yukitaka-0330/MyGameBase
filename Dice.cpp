@@ -18,40 +18,40 @@ HRESULT Dice::Initialize()
 	{
 
 		//面1
-		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
-		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（左上）,テクスチャの座標(画鋲をイメージすればいいかも、ここに春よーみたいな感じ)0
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 1
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 2
+		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（左下）,テクスチャの座標 3
 
 		//面2
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 4
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 5
-		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 6 z軸+で奥
-		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 7 z軸+で奥
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）,テクスチャの座標 4
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）,テクスチャの座標 5
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 6 z軸+で奥
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 7 z軸+で奥
 
 		//面3
-		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 8 z軸+で奥
-		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 9 z軸+で奥
-		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 10 z軸+で奥
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 11 z軸+で奥
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)},//四角形の頂点（右奥上）,テクスチャの座標 8 z軸+で奥
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)},//四角形の頂点（右奥下）,テクスチャの座標 9 z軸+で奥
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)},//四角形の頂点（左奥上）,テクスチャの座標 10 z軸+で奥
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f)},//四角形の頂点（左奥下）,テクスチャの座標 11 z軸+で奥
 
 		//面4
-		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上)12
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下)13
-		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 四角形の頂点（左上)14
-		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f) },// 四角形の頂点（左下)15
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.0f, 0.0f, 0.0f),XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上)12
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f),XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f)},//四角形の頂点（左奥下)13
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f),XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f) },// 四角形の頂点（左上)14
+		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f),XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f) },// 四角形の頂点（左下)15
 	
 		//面5
-		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥上)16
-		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.5f, 0.0f)},//四角形の頂点（右奥上）17
-		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）18
-		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上)19
+		{XMVectorSet(-1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},//四角形の頂点（左奥上)16
+		{XMVectorSet(1.0f ,1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.5f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},//四角形の頂点（右奥上）17
+		{XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）18
+		{XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上)19
 
 		//面6
-		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（左奥下）20
-		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f)},//四角形の頂点（右奥下）21
-		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）22
-		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下)23
+		{XMVectorSet(-1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f)},//四角形の頂点（左奥下）20
+		{XMVectorSet(1.0f ,-1.0f ,2.0f ,0.0f),XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f),XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f)},//四角形の頂点（右奥下）21
+		{XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）22
+		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下)23
 	};
 
 	// 頂点データ用バッファの設定
@@ -152,6 +152,7 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	//cb.matWVP = XMMatrixTranspose(view * proj);
+	cb.matW = XMMatrixTranspose(worldMatrix);
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
