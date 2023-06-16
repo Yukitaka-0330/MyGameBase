@@ -249,7 +249,6 @@ HRESULT Direct3D::InitShader()
     }
 
     SAFE_RELEASE(pCompilePS);
-    pCompilePS->Release();
 
    // ラスタライザ作成
     D3D11_RASTERIZER_DESC rdc = {};

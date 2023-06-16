@@ -8,6 +8,7 @@
 
 
 using namespace DirectX;
+using std::vector;
 class Sprite
 {
 	//コンスタントバッファー
@@ -23,15 +24,21 @@ class Sprite
 		XMVECTOR uv;
 	};
 
+	HRESULT hr;
+
 protected:
-	UINT64 vertexNum_; //頂点数
-	std::vector<VERTEX> vertices_; //頂点情報
+	UINT64  vertexNum_; //頂点数
+	vector<VERTEX> vertices_; //頂点情報
 	ID3D11Buffer* pVertexBuffer_; //頂点バッファ
 
 	UINT64 indexNum; //インデックス数
-	std::vector<int> index_; //インデックス情報
+	vector<int> index_; //インデックス情報
 
 	Texture* pTexture_; //テクスチャ
+
+	//もとはないやつ
+	ID3D11Buffer* pIndexBuffer_; //インデックスバッファ
+	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
 public:
 	Sprite();
@@ -58,7 +65,7 @@ private:
 	HRESULT CreateIndexBuffer(); //インデックスバッファを作成
 
 	HRESULT CreateConstantBuffer(); //コンスタントバッファを作成
-
+	
 	HRESULT LoadTexture(); //テクスチャをロード
 
 	//Drawから呼ばれる関数

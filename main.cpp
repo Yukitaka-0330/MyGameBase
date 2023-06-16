@@ -3,7 +3,8 @@
 #include "Direct3D.h"
 #include "Camera.h"
 //#include "Quad.h"
-#include "Dice.h"
+//#include "Dice.h"
+#include "Sprite.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -13,7 +14,8 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 
 //Quad *q;
-Dice* d;
+//Dice* d;
+Sprite* s;
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -80,8 +82,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    // q = new Quad;
   // hr = q->Initialize();
 
-   d = new Dice;
-   hr = d->Initialize();
+  /* d = new Dice;
+   hr = d->Initialize();*/
+
+   s = new Sprite;
+   hr = s->Initialize();
    if(FAILED(hr))
    {
        PostQuitMessage(0);  //プログラム終了
@@ -121,16 +126,17 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             // q->Draw(mat);
             
             //左右
-            XMMATRIX matT = XMMatrixTranslation(0 ,0 ,0);
+           // XMMATRIX matT = XMMatrixTranslation(0 ,0 ,0);
+             XMMATRIX matI = XMMatrixIdentity();
             //q->Draw(mat);
            
             //拡大縮小
             //XMMATRIX matS = XMMatrixScaling(1, 3, 1); //0だと表示されない
 
             // XMMATRIX mat = matRx * matR;
-            d->Draw(matR);
+           // d->Draw(matR);
            // q->Draw(matR);
-           // d->Draw(mat);
+            s->Draw(matI);
 
             //q->Draw(); //QuadをDraw
             Direct3D::EndDraw();
@@ -141,10 +147,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     Direct3D::Release();
      //SAFE_RELEASE(q);
     // SAFE_DELETE(q);
-    SAFE_RELEASE(d);
-    SAFE_DELETE(d);
-    //q->Release();
-    //delete q;
+    //SAFE_RELEASE(d);
+    //SAFE_DELETE(d);
+
+    SAFE_RELEASE(s);
+    SAFE_DELETE(s);
+    
     return 0;
 }
 
