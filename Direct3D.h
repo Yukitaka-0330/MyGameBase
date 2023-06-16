@@ -1,7 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <assert.h> //これはC言語のヘッダファイル
-
+#include <vector>
 //リンカ
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
