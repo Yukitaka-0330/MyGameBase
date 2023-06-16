@@ -70,8 +70,6 @@ void Sprite::Release()
 
 void Sprite::InitVertexData()
 {
-
-	vertexNum_ = 4;
 	// 頂点情報
 	vertices_ =
 	{
@@ -81,20 +79,22 @@ void Sprite::InitVertexData()
 		{XMVectorSet(-1.0f,-1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)},	// 四角形の頂点（左下）,テクスチャの座標
 
 	};
+
+	vertexNum_ = vertices_.size();
 }
 
 HRESULT Sprite::CreateVertexBuffer()
 {
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = vertexNum_ * sizeof(vertices_);  //ByteWidthがバッファーのサイズ
+	bd_vertex.ByteWidth = vertexNum_ * sizeof(VERTEX);  //ByteWidthがバッファーのサイズ
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;	 //バッファーの読み取りと書き込み方法を特定
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;		//バッファーをパイプラインに結びつける
 	bd_vertex.CPUAccessFlags = 0;	//CPUアクセスが必要ない場合は0
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = &vertices_;
+	data_vertex.pSysMem = &vertices_.front();
 
 	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
@@ -125,7 +125,7 @@ HRESULT Sprite::CreateIndexBuffer()
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = &index_;
+	InitData.pSysMem = &index_.front();
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 
