@@ -153,9 +153,13 @@ HRESULT Direct3D::InitShader()
     //{
     //    //エラー処理
     //    MessageBox(nullptr, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
+    // 
+    //       SAFE_RELEASE(pCompileVS);
     //    return hr;
     //    //return E_FAIL;
     //}
+
+    //SAFE_RELEASE(pCompileVS);
 
     // ピクセルシェーダの作成（コンパイル）
     //ID3DBlob* pCompilePS = nullptr;
@@ -202,6 +206,7 @@ HRESULT Direct3D::InitShader()
        //エラー処理
        MessageBox(nullptr, "頂点シェーダの作成に失敗しました", "エラー", MB_OK);
        return hr;
+       //開放処理
        //return E_FAIL;
    }
 
@@ -218,9 +223,14 @@ HRESULT Direct3D::InitShader()
     {
         //エラー処理
         MessageBox(nullptr, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
+
+        //開放処理
+        SAFE_RELEASE(pCompileVS);
         return hr;
         //return E_FAIL;
     }
+
+    SAFE_RELEASE(pCompileVS);
 
    //  ピクセルシェーダの作成（コンパイル）
     ID3DBlob* pCompilePS = nullptr;
