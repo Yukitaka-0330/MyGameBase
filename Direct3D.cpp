@@ -217,8 +217,7 @@ HRESULT Direct3D::InitShader()
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0 },//UVÀ•W
     };
     hr = pDevice_->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout_);
-   // SAFE_RELEASE(pCompileVS);
-    //pCompileVS->Release();
+  
     if (FAILED(hr))
     {
         //ƒGƒ‰[ˆ—
