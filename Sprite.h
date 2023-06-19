@@ -31,7 +31,7 @@ protected:
 	vector<VERTEX> vertices_; //頂点情報
 	ID3D11Buffer* pVertexBuffer_; //頂点バッファ
 
-	UINT64 indexNum; //インデックス数
+	UINT64 indexNum_; //インデックス数
 	vector<int> index_; //インデックス情報
 
 	Texture* pTexture_; //テクスチャ

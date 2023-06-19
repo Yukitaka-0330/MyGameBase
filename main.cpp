@@ -131,12 +131,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //q->Draw(mat);
            
             //Šg‘åk¬
-            //XMMATRIX matS = XMMatrixScaling(1, 3, 1); //0‚¾‚Æ•\¦‚³‚ê‚È‚¢
+            XMMATRIX matS = XMMatrixScaling(0.5, 0.5,0.0f); //0‚¾‚Æ•\¦‚³‚ê‚È‚¢
 
             // XMMATRIX mat = matRx * matR;
            // d->Draw(matR);
            // q->Draw(matR);
-            s->Draw(matI);
+            s->Draw(matS);
 
             //q->Draw(); //Quad‚ğDraw
             Direct3D::EndDraw();

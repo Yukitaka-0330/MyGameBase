@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-Sprite::Sprite() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr)
+Sprite::Sprite() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr),hr(0),indexNum_(0),vertexNum_(0)
 {
 }
 
@@ -44,7 +44,6 @@ HRESULT Sprite::Initialize()
 
 	LoadTexture();
 
-	//return S_OK;
 }
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
@@ -112,7 +111,7 @@ void Sprite::InitVertexData()
 HRESULT Sprite::CreateVertexBuffer()
 {
 	// 頂点データ用バッファの設定
-	D3D11_BUFFER_DESC bd_vertex;
+	D3D11_BUFFER_DESC bd_vertex{};
 	bd_vertex.ByteWidth = vertexNum_ * sizeof(VERTEX);  //ByteWidthがバッファーのサイズ
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;	 //バッファーの読み取りと書き込み方法を特定
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;		//バッファーをパイプラインに結びつける
@@ -127,7 +126,7 @@ HRESULT Sprite::CreateVertexBuffer()
 
 void Sprite::InitIndexData()
 {
-	indexNum = 6;
+	indexNum_ = 6;
 	//インデックス情報
 	index_ = { 0,2,3, 0,1,2 };
 }
@@ -135,13 +134,13 @@ void Sprite::InitIndexData()
 HRESULT Sprite::CreateIndexBuffer()
 {
 	// インデックスバッファを生成する
-	D3D11_BUFFER_DESC   bd;
+	D3D11_BUFFER_DESC   bd{};
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = indexNum * sizeof(index_);
+	bd.ByteWidth = indexNum_ * sizeof(index_);
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
-	D3D11_SUBRESOURCE_DATA InitData;
+	D3D11_SUBRESOURCE_DATA InitData{};
 	InitData.pSysMem = &index_.front();
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
@@ -152,7 +151,7 @@ HRESULT Sprite::CreateIndexBuffer()
 HRESULT Sprite::CreateConstantBuffer()
 {
 	//コンスタントバッファ作成
-	D3D11_BUFFER_DESC cb;
+	D3D11_BUFFER_DESC cb{};
 	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
 	cb.Usage = D3D11_USAGE_DYNAMIC;
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
