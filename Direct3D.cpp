@@ -141,12 +141,6 @@ HRESULT Direct3D::InitShader()
 }
 
 
-
-
-
-
-
-
 HRESULT Direct3D::InitShader3D()
 {
     using namespace Direct3D;
@@ -230,7 +224,7 @@ HRESULT Direct3D::InitShader2D()
 {
     HRESULT hr;
     //2D
-  //  頂点シェーダの作成（コンパイル）
+   //頂点シェーダの作成（コンパイル）
     ID3DBlob* pCompileVS = nullptr;
     D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
     assert(pCompileVS != nullptr);//アサート
