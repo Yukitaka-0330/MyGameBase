@@ -136,6 +136,8 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(XMMATRIX& worldMatrix)
 {
+	Direct3D::SetShader(SHADER_3D);
+
 	//コンスタントバッファに渡す情報
 	//XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
 	//XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点

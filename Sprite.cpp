@@ -41,13 +41,14 @@ HRESULT Sprite::Initialize()
 		return hr;
 	}
 
-
 	LoadTexture();
 
 }
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
 {
+	Direct3D::SetShader(SHADER_2D);
+
 	PassDataToCB(worldMatrix);
 
 	SetBufferToPipeline();

@@ -3,7 +3,7 @@
 #include "Direct3D.h"
 #include "Camera.h"
 //#include "Quad.h"
-//#include "Dice.h"
+#include "Dice.h"
 #include "Sprite.h"
 
 //定数宣言
@@ -14,7 +14,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 
 //Quad *q;
-//Dice* d;
+Dice* d;
 Sprite* s;
 
 //プロトタイプ宣言
@@ -82,8 +82,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    // q = new Quad;
   // hr = q->Initialize();
 
-  /* d = new Dice;
-   hr = d->Initialize();*/
+   d = new Dice;
+   hr = d->Initialize();
 
    s = new Sprite;
    hr = s->Initialize();
@@ -112,8 +112,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             //ゲームの処理
             Direct3D::BeginDraw();
-          
-           
 
             //描画処理
             static float n = 0;
@@ -128,15 +126,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //左右
            // XMMATRIX matT = XMMatrixTranslation(0 ,0 ,0);
              XMMATRIX matI = XMMatrixIdentity();
-            //q->Draw(mat);
            
             //拡大縮小
             XMMATRIX matS = XMMatrixScaling(0.5, 0.5,0.0f); //0だと表示されない
 
             // XMMATRIX mat = matRx * matR;
-           // d->Draw(matR);
-           // q->Draw(matR);
             s->Draw(matS);
+            d->Draw(matR);
 
             //q->Draw(); //QuadをDraw
             Direct3D::EndDraw();
@@ -144,15 +140,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
     
-    Direct3D::Release();
-     //SAFE_RELEASE(q);
-    // SAFE_DELETE(q);
-    //SAFE_RELEASE(d);
-    //SAFE_DELETE(d);
-
-    SAFE_RELEASE(s);
-    SAFE_DELETE(s);
     
+    // SAFE_DELETE(q);
+    SAFE_DELETE(d);
+    SAFE_DELETE(s);
+
+    Direct3D::Release();
     return 0;
 }
 
