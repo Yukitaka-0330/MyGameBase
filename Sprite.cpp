@@ -1,5 +1,5 @@
 #include "Sprite.h"
-
+#include "Camera.h"
 Sprite::Sprite() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr),hr(0),indexNum_(0),vertexNum_(0)
 {
 }
@@ -53,7 +53,7 @@ void Sprite::Draw(XMMATRIX& worldMatrix)
 
 	SetBufferToPipeline();
 
-	Direct3D::pContext_->DrawIndexed(6, 0, 0);
+	Direct3D::pContext_->DrawIndexed(indexNum_, 0, 0);
 }
 
 void Sprite::Release()
@@ -91,16 +91,17 @@ HRESULT Sprite::CreateVertexBuffer()
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = &vertices_.front();
+	data_vertex.pSysMem = vertices_.data();
 	
 	return Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 }
 
 void Sprite::InitIndexData()
 {
-	indexNum_ = 6;
 	//インデックス情報
 	index_ = { 0,2,3, 0,1,2 };
+
+	indexNum_ = index_.size();
 }
 
 HRESULT Sprite::CreateIndexBuffer()
@@ -108,12 +109,12 @@ HRESULT Sprite::CreateIndexBuffer()
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd{};
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = indexNum_ * sizeof(index_);
+	bd.ByteWidth = indexNum_ * sizeof(int);
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA InitData{};
-	InitData.pSysMem = &index_.front();
+	InitData.pSysMem = index_.data();
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 

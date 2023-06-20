@@ -81,7 +81,13 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     ///////////////////////////レンダーターゲットビュー作成///////////////////////////////
     //スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
     ID3D11Texture2D* pBackBuffer;
-    pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+    hr = pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+    if (FAILED(hr))
+    {
+        //エラー処理
+        MessageBox(nullptr, "バックバッファの取得に失敗しました", "エラー", MB_OK);
+        return hr;
+    }
 
     //レンダーターゲットビューを作成
     hr = pDevice_->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView_);
@@ -159,10 +165,7 @@ HRESULT Direct3D::InitShader2D()
         //エラー処理
         MessageBox(nullptr, "頂点シェーダの作成に失敗しました", "エラー", MB_OK);
         return hr;
-        //開放処理
-        //return E_FAIL;
     }
-
 
     // 頂点インプットレイアウト
     D3D11_INPUT_ELEMENT_DESC layout[] = {
@@ -175,11 +178,9 @@ HRESULT Direct3D::InitShader2D()
     {
         //エラー処理
         MessageBox(nullptr, "頂点インプットレイアウトの作成に失敗しました", "エラー", MB_OK);
-
         //開放処理
         SAFE_RELEASE(pCompileVS);
         return hr;
-        //return E_FAIL;
     }
 
     SAFE_RELEASE(pCompileVS);
@@ -197,7 +198,6 @@ HRESULT Direct3D::InitShader2D()
         //エラー処理
         MessageBox(nullptr, "ピクセルシェーダの作成に失敗しました", "エラー", MB_OK);
         return hr;
-        //return E_FAIL;
     }
 
     SAFE_RELEASE(pCompilePS);
@@ -215,10 +215,14 @@ HRESULT Direct3D::InitShader2D()
         return hr;
         //return E_FAIL;
     }
+
+    return S_OK;
 }
 
 HRESULT Direct3D::InitShader3D()
 {
+    using namespace Direct3D;
+
     HRESULT hr;
 
     //頂点シェーダの作成（コンパイル）
@@ -288,7 +292,7 @@ HRESULT Direct3D::InitShader3D()
         //return E_FAIL;
     }
 
-    
+    return S_OK;
 }
 
 void Direct3D::SetShader(SHADER_TYPE type)

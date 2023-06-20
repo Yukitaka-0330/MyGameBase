@@ -13,9 +13,8 @@ const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 
-//Quad *q;
-Dice* d;
-Sprite* s;
+//Quad *q
+
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -75,18 +74,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     Camera::Initialize();
 
-    /*Camera::SetPosition(XMFLOAT3(0, 0, 0));
-    Camera::SetTarget(XMFLOAT3(0, 0, 0));*/
-   
+    Dice* pDice = new Dice;
+    hr = pDice->Initialize();
+    Sprite* pSprite = new Sprite;
+    hr = pSprite->Initialize();
 
-   // q = new Quad;
-  // hr = q->Initialize();
-
-   d = new Dice;
-   hr = d->Initialize();
-
-   s = new Sprite;
-   hr = s->Initialize();
    if(FAILED(hr))
    {
        PostQuitMessage(0);  //プログラム終了
@@ -113,28 +105,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //ゲームの処理
             Direct3D::BeginDraw();
 
-            //描画処理
-            static float n = 0;
-            static float nn = 0;
-            n += 0.5;
-            nn += 1;
-            //回転
-             XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(n/20));
-             XMMATRIX matRx = XMMatrixRotationX(XMConvertToRadians(nn / 20));
-            // q->Draw(mat);
-            
-            //左右
-           // XMMATRIX matT = XMMatrixTranslation(0 ,0 ,0);
-             XMMATRIX matI = XMMatrixIdentity();
-           
-            //拡大縮小
-            XMMATRIX matS = XMMatrixScaling(0.5, 0.5,0.0f); //0だと表示されない
+            static float angle = 0;
+            angle += 0.05;
+            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
+            pDice->Draw(mat);
 
-            // XMMATRIX mat = matRx * matR;
-            s->Draw(matS);
-            d->Draw(matR);
+            mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+            pSprite->Draw(mat);
 
-            //q->Draw(); //QuadをDraw
             Direct3D::EndDraw();
           
         }
@@ -142,8 +120,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     
     // SAFE_DELETE(q);
-    SAFE_DELETE(d);
-    SAFE_DELETE(s);
+    SAFE_DELETE(pDice);
+    SAFE_DELETE(pSprite);
 
     Direct3D::Release();
     return 0;
