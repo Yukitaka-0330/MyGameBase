@@ -5,6 +5,7 @@
 //#include "Quad.h"
 #include "Dice.h"
 #include "Sprite.h"
+#include "Transform.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -112,7 +113,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
             pSprite->Draw(mat);
-
+           // Transform diceTrans;
+           // diceTrans.position_ = { 0,0,0 };
+           // diceTrans.rotate_ = { angle,angle,angle };
+           // diceTrans.scale_ = { 1,1,1 };
+           // pDice->Draw(diceTrans);
             Direct3D::EndDraw();
           
         }
