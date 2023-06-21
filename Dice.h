@@ -1,4 +1,4 @@
-
+#if 0
 #pragma once
 #include <DirectXMath.h>
 #include "Direct3D.h"
@@ -38,10 +38,10 @@ public:
 	void Draw(XMMATRIX& worldMatrix);
 	void Release();
 };
+#endif
 
 
-
-#if 0
+//#if 0
 #pragma once
 #include <DirectXMath.h>
 #include "Direct3D.h"
@@ -120,6 +120,6 @@ private:
 
 };
 
-#endif
+//#endif
 
 

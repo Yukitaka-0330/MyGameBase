@@ -1,4 +1,4 @@
-
+#if 0
 #include "Dice.h"
 #include "Camera.h"
 
@@ -198,9 +198,9 @@ void Dice::Release()
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
 }
+#endif
 
-
-#if 0
+//#if 0
 #include "Dice.h"
 #include "Camera.h"
 Dice::Dice() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr), hr(0), indexNum_(0), vertexNum_(0)
@@ -331,36 +331,98 @@ HRESULT Dice::CreateVertexBuffer()
 
 void Dice::InitIndexData()
 {
-	
+	//インデックス情報
+
+	index_ = {
+					0,2,3, 0,1,2,//前面
+					4,7,5, 4,6,7,//右面
+					8,11,9, 8,10,11,//後面
+					12,15,13, 12,14,15,//左面
+					16,18,19, 16,17,18,//上面
+					20,23,22, 20,22,21,//下面
+	};
+	indexNum_ = index_.size();
 }
 
 HRESULT Dice::CreateIndexBuffer()
 {
-	
+	// インデックスバッファを生成する
+	D3D11_BUFFER_DESC   bd;
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = indexNum_ * sizeof(int);
+	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = index_.data();
+	InitData.SysMemPitch = 0;
+	InitData.SysMemSlicePitch = 0;
+
+	return Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 }
 
 HRESULT Dice::CreateConstantBuffer()
 {
-	
+	//コンスタントバッファ作成
+	D3D11_BUFFER_DESC cb;
+	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
+	cb.Usage = D3D11_USAGE_DYNAMIC;
+	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cb.MiscFlags = 0;
+	cb.StructureByteStride = 0;
+
+	// コンスタントバッファの作成
+	return Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 }
 
 HRESULT Dice::LoadTexture()
 {
-	
+	pTexture_ = new Texture;
+	pTexture_->Load("Assets\\dice.png");
+
+	return S_OK;
 }
 
 void Dice::PassDataToCB(DirectX::XMMATRIX& worldMatrix)
 {
+	CONSTANT_BUFFER cb;
+	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	//cb.matWVP = XMMatrixTranspose(view * proj);
+	cb.matW = XMMatrixTranspose(worldMatrix);
 
-	
+	D3D11_MAPPED_SUBRESOURCE pdata;
+	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
+	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
+
+	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
+
+	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
 }
 
 void Dice::SetBufferToPipeline()
 {
-	
+	//頂点バッファ
+	//UINT stride = sizeof(XMVECTOR); //前使ってたやつ
+	UINT stride = sizeof(VERTEX);
+	UINT offset = 0;
+	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+	// インデックスバッファーをセット
+	stride = sizeof(int);
+	offset = 0;
+	Direct3D::pContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
+
+	//コンスタントバッファ
+	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
+	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 }
 
-#endif
+//#endif
 
 
 
