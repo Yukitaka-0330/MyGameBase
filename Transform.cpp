@@ -22,16 +22,22 @@ void Transform::Calclation()
 	matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.z);
 
 	//‰ñ“]
-	matRotate_= XMMatrixRotationX(XMConvertToDegrees(position_.x)) *
-				XMMatrixRotationY(XMConvertToDegrees(position_.y)) *
-				XMMatrixRotationZ(XMConvertToDegrees(position_.z));
+	XMMATRIX rotateX, rotateY, rotateZ;
+	rotateX = XMMatrixRotationX(XMConvertToRadians(rotate_.x));
+	rotateY = XMMatrixRotationY(XMConvertToRadians(rotate_.y));
+	rotateZ = XMMatrixRotationZ(XMConvertToRadians(rotate_.z));
+	matRotate_ = rotateZ * rotateX * rotateY;
 
 	//Šg‘å—¦
-	matScale_ = XMMatrixScaling(position_.x, position_.y, position_.z);
+	matScale_ = XMMatrixScaling(scale_.x, scale_.y, scale_.z);
 }
 
 XMMATRIX Transform::GetWorldMatrix()
 {
-	Calclation();
 	return matScale_ * matRotate_ * matTranslate_;
+}
+
+XMMATRIX Transform::GetNormalMatrix()
+{
+	return matRotate_ * XMMatrixInverse(nullptr, matScale_);
 }

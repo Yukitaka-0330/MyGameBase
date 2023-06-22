@@ -45,11 +45,13 @@ HRESULT Sprite::Initialize()
 
 }
 
-void Sprite::Draw(XMMATRIX& worldMatrix)
+void Sprite::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_2D);
 
-	PassDataToCB(worldMatrix);
+	transform.Calclation();//トランスフォームを計算
+
+	PassDataToCB(transform.GetWorldMatrix());
 
 	SetBufferToPipeline();
 
@@ -142,7 +144,7 @@ HRESULT Sprite::LoadTexture()
 	return S_OK;
 }
 
-void Sprite::PassDataToCB(DirectX::XMMATRIX& worldMatrix)
+void Sprite::PassDataToCB(XMMATRIX worldMatrix)
 {
 
 	CONSTANT_BUFFER cb;

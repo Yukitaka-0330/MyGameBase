@@ -3,6 +3,7 @@
 #include "Direct3D.h"
 #include <vector>
 #include"Texture.h"
+#include "Transform.h"
 
 #define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;} //開放処理
 
@@ -49,8 +50,8 @@ public:
 	HRESULT Initialize();
 
 	//描画
-	//引数:worldMatrix ワールド行列
-	void Draw(XMMATRIX& worldMatrix);
+	//引数：transform	トランスフォームクラスオブジェクト
+	void Draw(Transform& transform);
 
 	//開放
 	void Release();
@@ -69,7 +70,7 @@ private:
 	HRESULT LoadTexture(); //テクスチャをロード
 
 	//Drawから呼ばれる関数
-	void PassDataToCB(DirectX::XMMATRIX& worldMatrix); //コンスタントバッファに各種情報を渡す
+	void PassDataToCB(XMMATRIX worldMatrix); //コンスタントバッファに各種情報を渡す
 	void SetBufferToPipeline(); //各バッファをパイプラインにセット
 
 };
