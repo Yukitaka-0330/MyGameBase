@@ -76,12 +76,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     Camera::Initialize();
 
-    Dice* pDice = new Dice;
+   /* Dice* pDice = new Dice;
     hr = pDice->Initialize();
     Sprite* pSprite = new Sprite;
-    hr = pSprite->Initialize();
+    hr = pSprite->Initialize();*/
     Fbx* pFbx = new Fbx;
-    hr = pFbx->Load("Oden.fbx");
+    hr = pFbx->Load("Assets\\Oden.fbx");
 
    if(FAILED(hr))
    {
@@ -112,10 +112,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             angle += 0.05;
             //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
 
-            Transform diceTransform;
-            diceTransform.position_.y = 3.0f;
-            diceTransform.rotate_.y = angle;
-            pDice->Draw(diceTransform);
+            //Transform diceTransform;
+            //diceTransform.position_.y = 3.0f;
+            //diceTransform.rotate_.y = angle;
+            //pDice->Draw(diceTransform);
 
             Transform fbxTransform;
             fbxTransform.position_.y = 1.0f;
@@ -123,11 +123,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             pFbx->Draw(fbxTransform);
 
             ////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
-            Transform spriteTransform;
-            spriteTransform.scale_.x = 512.0f / 800.0f;
-            spriteTransform.scale_.y = 256.0f / 600.0f;
-            //mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
-            pSprite->Draw(spriteTransform);
+            //Transform spriteTransform;
+            //spriteTransform.scale_.x = 512.0f / 800.0f;
+            //spriteTransform.scale_.y = 256.0f / 600.0f;
+            ////mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
+            //pSprite->Draw(spriteTransform);
 
             Direct3D::EndDraw();
           
@@ -136,8 +136,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     
     // SAFE_DELETE(q);
-    SAFE_DELETE(pDice);
-    SAFE_DELETE(pSprite);
+   /* SAFE_DELETE(pDice);
+    SAFE_DELETE(pSprite);*/
     SAFE_DELETE(pFbx);
 
     Direct3D::Release();
