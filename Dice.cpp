@@ -1,5 +1,4 @@
 #include "Dice.h"
-
 //’¸“_î•ñ‚Ì€”õ
 void Dice::InitVertexData()
 {
