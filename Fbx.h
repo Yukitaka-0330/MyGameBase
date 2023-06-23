@@ -8,7 +8,7 @@
 #pragma comment(lib, "LibXml2-Md.lib")
 #pragma comment(lib, "zlib-Md.lib")
 
-//#pragma comment‚Ì‚Æ‚±‚ë MT -> MD‚©Md‚Ì‚Ç‚Á‚¿‚©‚É’¼‚·
+//#pragma comment‚Ì‚Æ‚±‚ë MT -> MD‚©Md‚Ì‚Ç‚Á‚¿‚©‚É’¼‚· ‚Ç‚Á‚¿‚Å‚à‚¢‚¢‚Á‚Û‚¢
 
 class Fbx
 {
