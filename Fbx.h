@@ -3,6 +3,7 @@
 #include <fbxsdk.h>
 #include <string>
 #include "Transform.h"
+#include "Texture.h"
 
 #pragma comment(lib, "LibFbxSDK-Md.lib")
 #pragma comment(lib, "LibXml2-Md.lib")
@@ -20,22 +21,27 @@ class Fbx
 
 	struct VERTEX
 	{
-		XMFLOAT3 position;
+		XMVECTOR position;
 	};
 
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer* pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
+	Texture* pTexture_;
 
 	int vertexCount_;	//í∏ì_êî
 	int polygonCount_;	//É|ÉäÉSÉìêî
-
+	void InitVertex(fbxsdk::FbxMesh* mesh);
+	void InitIndex(fbxsdk::FbxMesh* mesh);
+	void IntConstantBuffer();
 public:
 
 	Fbx();
 	HRESULT Load(std::string fileName);
 	void    Draw(Transform& transform);
 	void    Release();
+
+	
 };
 
 

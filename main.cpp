@@ -5,6 +5,7 @@
 //#include "Quad.h"
 #include "Dice.h"
 #include "Sprite.h"
+#include "Fbx.h"
 #include "Transform.h"
 
 //’è”éŒ¾
@@ -79,6 +80,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     hr = pDice->Initialize();
     Sprite* pSprite = new Sprite;
     hr = pSprite->Initialize();
+    Fbx* pFbx = new Fbx;
+    hr = pFbx->Load("Oden.fbx");
 
    if(FAILED(hr))
    {
@@ -114,6 +117,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             diceTransform.rotate_.y = angle;
             pDice->Draw(diceTransform);
 
+            Transform fbxTransform;
+            fbxTransform.position_.y = 1.0f;
+            fbxTransform.rotate_.y = angle;
+            pFbx->Draw(fbxTransform);
+
             ////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
             Transform spriteTransform;
             spriteTransform.scale_.x = 512.0f / 800.0f;
@@ -130,6 +138,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     // SAFE_DELETE(q);
     SAFE_DELETE(pDice);
     SAFE_DELETE(pSprite);
+    SAFE_DELETE(pFbx);
 
     Direct3D::Release();
     return 0;
