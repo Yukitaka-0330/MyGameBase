@@ -42,7 +42,7 @@ HRESULT Sprite::Initialize()
 	}
 
 	LoadTexture();
-
+	return S_OK;
 }
 
 void Sprite::Draw(Transform& transform)
