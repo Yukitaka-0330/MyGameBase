@@ -77,7 +77,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
     ///////////////////////////レンダーターゲットビュー作成///////////////////////////////
     //スワップチェーンからバックバッファを取得（バックバッファ ＝ レンダーターゲット）
-    ID3D11Texture2D* pBackBuffer;
+    ID3D11Texture2D* pBackBuffer = nullptr;
     pSwapChain_->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
     //レンダーターゲットビューを作成

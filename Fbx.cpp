@@ -1,7 +1,7 @@
 #include "Fbx.h"
 #include "Direct3D.h"
 #include "Camera.h"
-Fbx::Fbx():pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr),vertexCount_(0),polygonCount_(0)
+Fbx::Fbx():pVertexBuffer_(nullptr),pIndexBuffer_(nullptr),pConstantBuffer_(nullptr),pTexture_(nullptr), vertexCount_(0), polygonCount_(0)
 {
 }
 
@@ -32,8 +32,6 @@ HRESULT Fbx::Load(std::string fileName)
 	InitIndex(mesh);		//インデックスバッファ準備
 	IntConstantBuffer();	//コンスタントバッファ準備
 
-
-
 	//マネージャ解放
 	pFbxManager->Destroy();
 	return S_OK;
@@ -41,7 +39,7 @@ HRESULT Fbx::Load(std::string fileName)
 
 void Fbx::Draw(Transform& transform)
 {
-	Direct3D::SetShader(SHADER_2D);
+	Direct3D::SetShader(SHADER_3D);
 	transform.Calclation();//トランスフォームを計算
 
 	//コンスタントバッファに情報を渡す
