@@ -118,7 +118,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //pDice->Draw(diceTransform);
 
             Transform fbxTransform;
-            fbxTransform.position_.y = 1.0f;
+            fbxTransform.position_.y = 0.0f;
             fbxTransform.rotate_.y = angle;
             pFbx->Draw(fbxTransform);
 
