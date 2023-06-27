@@ -24,6 +24,7 @@ class Fbx
 	struct VERTEX
 	{
 		XMVECTOR position;
+		XMVECTOR uv;
 	};
 	struct MATERIAL //ƒ}ƒeƒŠƒAƒ‹
 	{
