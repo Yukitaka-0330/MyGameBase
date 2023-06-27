@@ -193,7 +193,7 @@ void Fbx::SetBufferToPipeline()
 
 void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 {
-	pMaterialList_ = new MATERIAL;
+	pMaterialList_ = new MATERIAL[materialCount_];
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -207,7 +207,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
 
 		//テクスチャあり
-		if (fileTextureCount != 0)
+		if (fileTextureCount)
 		{
 			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
 			const char* textureFilePath = textureInfo->GetRelativeFileName();
