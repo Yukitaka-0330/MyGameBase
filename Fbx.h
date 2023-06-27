@@ -32,7 +32,7 @@ class Fbx
 	};
 
 	ID3D11Buffer* pVertexBuffer_;
-	ID3D11Buffer* pIndexBuffer_;
+	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
 
