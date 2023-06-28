@@ -12,6 +12,8 @@ cbuffer global
 {
 	float4x4	matWVP;			// ワールド・ビュー・プロジェクションの合成行列
 	float4x4	matW;	//ワールド行列
+	float4		diffuseColor;		// ディフューズカラー（マテリアルの色）
+	bool		isTexture;		// テクスチャ貼ってあるかどうか
 };
 
 //───────────────────────────────────────
@@ -55,8 +57,8 @@ float4 PS(VS_OUT inData) : SV_Target
 	/*float4 lightSource = float4(0.3,0.5,1.0,0.0);
 	return lightSource * g_texture.Sample(g_sampler, inData.uv) * inData.color;*/
 	//return float4(1,1,1,1); //これだと白になる
-
 	float4 diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
 	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2, 0.2, 0.2, 1);
+	
 	return diffuse + ambient;
 }

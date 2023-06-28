@@ -3,6 +3,7 @@
 #include <fbxsdk.h>
 #include <string>
 #include "Transform.h"
+#include<vector>
 
 
 #pragma comment(lib, "LibFbxSDK-Md.lib")
@@ -13,6 +14,8 @@
 //ヘッダーでヘッダーをインクルードするのはあんまりよろしくない
 
 class Texture; //前方宣言　cppでヘッダーをインクルードすればよい
+
+using namespace std;
 
 class Fbx
 {
@@ -25,16 +28,19 @@ class Fbx
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 	struct MATERIAL //マテリアル
 	{
 		Texture* pTexture;
+		XMFLOAT4	diffuse;
 	};
 
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
+	vector<int>indexCount_;
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
