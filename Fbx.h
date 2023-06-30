@@ -42,7 +42,9 @@ class Fbx
 	ID3D11Buffer** pIndexBuffer_;
 	ID3D11Buffer* pConstantBuffer_;
 	MATERIAL* pMaterialList_;
-	vector<int>indexCount_;
+	//vector<int>indexCount_;
+	int* indexCount_;
+
 
 	int vertexCount_;	//’¸“_”
 	int polygonCount_;	//ƒ|ƒŠƒSƒ“”
