@@ -200,16 +200,42 @@ void Fbx::IntConstantBuffer()
 
 void Fbx::PassDataToCB(Transform transform)
 {
-	//コンスタントバッファに情報を渡す
-	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+	for (int i = 0; i < materialCount_; i++)
+	{
+		//コンスタントバッファに情報を渡す
+		CONSTANT_BUFFER cb;
+		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 
-	D3D11_MAPPED_SUBRESOURCE pdata;
-	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+		if (i == 1)
+		{
+			cb.diffuseColor = XMFLOAT4(1, 0, 0, 1);
+			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
+		}
+		else
+		{
+			cb.diffuseColor = pMaterialList_[i].diffuse;
+			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
+		}
+		
+	
 
-	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+		D3D11_MAPPED_SUBRESOURCE pdata;
+		Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+		if (pMaterialList_[i].pTexture)
+		{
+			ID3D11SamplerState* pSampler = pMaterialList_[i].pTexture->GetSampler();
+			Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
+
+			ID3D11ShaderResourceView* pSRV = pMaterialList_[i].pTexture->GetSRV();
+			Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);
+		}
+		
+		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+	}
+	
 }
 
 void Fbx::SetBufferToPipeline()

@@ -6,6 +6,7 @@
 #include "Dice.h"
 #include "Sprite.h"
 #include "Fbx.h"
+#include"Input.h"
 #include "Transform.h"
 
 //定数宣言
@@ -74,6 +75,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
+    Input::Initialize(hWnd);
+
     Camera::Initialize();
 
    /* Dice* pDice = new Dice;
@@ -82,6 +85,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     hr = pSprite->Initialize();*/
     Fbx* pFbx = new Fbx;
     hr = pFbx->Load("Assets\\Oden.fbx");
+    //hr = pFbx->Load("Assets\\odden.fbx");
 
    if(FAILED(hr))
    {
@@ -105,6 +109,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         else
         {
             Camera::Update();
+
+            Input::Update();
+            if (Input::IsKey(DIK_ESCAPE))
+            {
+                PostQuitMessage(0);
+            }
 
             //ゲームの処理
             Direct3D::BeginDraw();
@@ -139,6 +149,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
    /* SAFE_DELETE(pDice);
     SAFE_DELETE(pSprite);*/
     SAFE_DELETE(pFbx);
+    Input::Release();
 
     Direct3D::Release();
     return 0;
