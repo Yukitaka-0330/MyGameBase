@@ -5,7 +5,8 @@
 #include "Camera.h"
 #include "Texture.h"
 
-Fbx::Fbx() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr), vertexCount_(NULL), polygonCount_(NULL), materialCount_(NULL)
+Fbx::Fbx() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr),
+			vertexCount_(NULL), polygonCount_(NULL), materialCount_(NULL),indexCount_(NULL)
 {
 }
 
@@ -181,6 +182,36 @@ void Fbx::IntConstantBuffer()
 	}
 }
 
+void Fbx::PassDataToCB(Transform transform)//コンスタントバッファに各種情報を渡す
+{
+	
+
+	for (int i = 0; i < materialCount_; i++)
+	{
+		CONSTANT_BUFFER cb;
+		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+
+		if (i == 1) {
+			cb.diffuseColor = XMFLOAT4(1, 1, 1, 1);
+			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
+		}
+		else {
+			cb.diffuseColor = pMaterialList_[i].diffuse;
+			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
+		}
+		D3D11_MAPPED_SUBRESOURCE pdata;
+		Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+	}
+	
+}
+
+void Fbx::SetBufferToPipeline()
+{
+}
+
 void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 {
 	pMaterialList_ = new MATERIAL[materialCount_];
@@ -232,6 +263,7 @@ void Fbx::Draw(Transform& transform)
 	Direct3D::SetShader(SHADER_3D);
 	transform.Calclation();//トランスフォームを計算
 	//コンスタントバッファに情報を渡す
+	//PassDataToCB(transform);
 	for (int i = 0; i < materialCount_; i++)
 	{
 		CONSTANT_BUFFER cb;
@@ -242,36 +274,20 @@ void Fbx::Draw(Transform& transform)
 			cb.diffuseColor = XMFLOAT4(1, 1, 1, 1);
 			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
 		}
-
 		else {
 			cb.diffuseColor = pMaterialList_[i].diffuse;
 			cb.isTexture = pMaterialList_[i].pTexture != nullptr;
 		}
-
-
-
-
-
-
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-
-
-
 		Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
-
-
 
 		//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
 		//頂点バッファ
 		UINT stride = sizeof(VERTEX);
 		UINT offset = 0;
 		Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
-
-
-
-
 		// インデックスバッファーをセット
 		stride = sizeof(int);
 		offset = 0;
