@@ -5,6 +5,8 @@ namespace Input
 	LPDIRECTINPUT8   pDInput = nullptr;
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr; //キーボードのを動かすための変数。
 	BYTE keyState[256] = { 0 };
+	BYTE prevKeyState[256];    //前フレームでの各キーの状態
+	
 
 	void Initialize(HWND hWnd)
 	{
@@ -16,13 +18,35 @@ namespace Input
 
 	void Update()
 	{
+		memcpy(prevKeyState, keyState, sizeof(keyState));
+
 		pKeyDevice->Acquire();//これは必ず書かないとダメ！
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState); //キーの状態がわかる
 	}
 
 	bool IsKey(int keyCode)
 	{
-		if (keyState[keyCode] & 128)
+		if (keyState[keyCode] & 0x80) //0xは16進のこと
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsKeyDown(int keyCode)
+	{
+		//今は押してて、前回は押してない
+		if (keyState[keyCode] & 0x80 && !(prevKeyState[keyCode] & 0x80))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsKeyUp(int keyCode)
+	{
+		//前回は押してて、今は押してない
+		if  (!(prevKeyState[keyCode] & 0x80) && keyState[keyCode] & 0x80)
 		{
 			return true;
 		}

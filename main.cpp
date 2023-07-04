@@ -111,10 +111,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             Camera::Update();
 
             Input::Update();
-            if (Input::IsKey(DIK_ESCAPE))
+            if (Input::IsKeyDown(DIK_ESCAPE))
             {
-                PostQuitMessage(0);
+                static int cnt = 0;
+                cnt++;
+                if (cnt >= 3)
+                {
+                    PostQuitMessage(0);
+                }
             }
+            
 
             //ƒQ[ƒ€‚Ìˆ—
             Direct3D::BeginDraw();
@@ -138,6 +144,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //spriteTransform.scale_.y = 256.0f / 600.0f;
             ////mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
             //pSprite->Draw(spriteTransform);
+
 
             Direct3D::EndDraw();
           
