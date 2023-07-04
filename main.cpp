@@ -1,13 +1,8 @@
 //インクルード
 #include <Windows.h>
-#include "Direct3D.h"
-#include "Camera.h"
-//#include "Quad.h"
-#include "Dice.h"
-#include "Sprite.h"
-#include "Fbx.h"
-#include"Input.h"
-#include "Transform.h"
+#include "Engine/Direct3D.h"
+#include "Engine/Camera.h"
+#include "Engine/Input.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -16,7 +11,6 @@ const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 
-//Quad *q
 
 
 //プロトタイプ宣言
@@ -75,17 +69,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
-    Input::Initialize(hWnd);
-
     Camera::Initialize();
 
-   /* Dice* pDice = new Dice;
-    hr = pDice->Initialize();
-    Sprite* pSprite = new Sprite;
-    hr = pSprite->Initialize();*/
-    Fbx* pFbx = new Fbx;
-    hr = pFbx->Load("Assets\\Oden.fbx");
-    //hr = pFbx->Load("Assets\\odden.fbx");
 
    if(FAILED(hr))
    {
@@ -109,60 +94,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         else
         {
             Camera::Update();
-
-            
-            
-
             //ゲームの処理
             Direct3D::BeginDraw();
-            static float angle = 0;
-            angle += 0.05;
-            //XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0,3,0);
-
-            //Transform diceTransform;
-            //diceTransform.position_.y = 3.0f;
-            //diceTransform.rotate_.y = angle;
-            //pDice->Draw(diceTransform);
-
-            static Transform fbxTransform;
-            fbxTransform.position_.y = 0.0f;
-            fbxTransform.rotate_.y = angle;
-           // pFbx->Draw(fbxTransform);
-
-            ////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
-            //Transform spriteTransform;
-            //spriteTransform.scale_.x = 512.0f / 800.0f;
-            //spriteTransform.scale_.y = 256.0f / 600.0f;
-            ////mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
-            //pSprite->Draw(spriteTransform);
-
-            Input::Update();
-            static Transform InputTransform;
-
-            if (Input::IsKey(DIK_RIGHT))
-            {
-                fbxTransform.position_.x += 0.01f;
-
-            }
-
-            if (Input::IsKey(DIK_LEFT))
-            {
-                fbxTransform.position_.x -= 0.01f;
-            }
-             
-            pFbx->Draw(fbxTransform);
+            
             Direct3D::EndDraw();
           
         }
     }
     
-    
-    // SAFE_DELETE(q);
-   /* SAFE_DELETE(pDice);
-    SAFE_DELETE(pSprite);*/
-    SAFE_DELETE(pFbx);
-    Input::Release();
-
     Direct3D::Release();
     return 0;
 }
@@ -172,11 +111,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg)
     {
-  
-    case WM_MOUSEMOVE:
-        Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
-        return 0;
-
     case WM_DESTROY:
          PostQuitMessage(0);  //プログラム終了
          return 0;
