@@ -1,11 +1,14 @@
 #include "Input.h"
 
+
 namespace Input
 {
 	LPDIRECTINPUT8   pDInput = nullptr;
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr; //キーボードのを動かすための変数。
 	BYTE keyState[256] = { 0 };
 	BYTE prevKeyState[256];    //前フレームでの各キーの状態
+	XMVECTOR mousePosition; //マウスのポジション
+
 	
 
 	void Initialize(HWND hWnd)
@@ -36,7 +39,7 @@ namespace Input
 	bool IsKeyDown(int keyCode)
 	{
 		//今は押してて、前回は押してない
-		if (keyState[keyCode] & 0x80 && !(prevKeyState[keyCode] & 0x80))
+		if (IsKey(keyCode) & 0x80 && !(prevKeyState[keyCode] & 0x80))
 		{
 			return true;
 		}
@@ -46,11 +49,21 @@ namespace Input
 	bool IsKeyUp(int keyCode)
 	{
 		//前回は押してて、今は押してない
-		if  (!(prevKeyState[keyCode] & 0x80) && keyState[keyCode] & 0x80)
+		if  (!(prevKeyState[keyCode] & 0x80) && IsKey(keyCode))
 		{
 			return true;
 		}
 		return false;
+	}
+
+	XMVECTOR GetMousePosition()
+	{
+		return mousePosition;
+	}
+
+	void SetMousePosition(int x, int y)
+	{
+		mousePosition = XMVectorSet((float)x, (float)y, 0, 0);
 	}
 
 	void Release()

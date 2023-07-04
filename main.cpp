@@ -110,16 +110,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         {
             Camera::Update();
 
-            Input::Update();
-            if (Input::IsKeyDown(DIK_ESCAPE))
-            {
-                static int cnt = 0;
-                cnt++;
-                if (cnt >= 3)
-                {
-                    PostQuitMessage(0);
-                }
-            }
+            
             
 
             //ゲームの処理
@@ -133,10 +124,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //diceTransform.rotate_.y = angle;
             //pDice->Draw(diceTransform);
 
-            Transform fbxTransform;
+            static Transform fbxTransform;
             fbxTransform.position_.y = 0.0f;
             fbxTransform.rotate_.y = angle;
-            pFbx->Draw(fbxTransform);
+           // pFbx->Draw(fbxTransform);
 
             ////mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
             //Transform spriteTransform;
@@ -145,7 +136,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             ////mat = XMMatrixScaling(512.0f/800.0f, 256.0f/600.0f, 1.0f);
             //pSprite->Draw(spriteTransform);
 
+            Input::Update();
+            static Transform InputTransform;
 
+            if (Input::IsKey(DIK_RIGHT))
+            {
+                fbxTransform.position_.x += 0.01f;
+
+            }
+
+            if (Input::IsKey(DIK_LEFT))
+            {
+                fbxTransform.position_.x -= 0.01f;
+            }
+             
+            pFbx->Draw(fbxTransform);
             Direct3D::EndDraw();
           
         }
@@ -168,9 +173,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch (msg)
     {
   
-    case WM_DESTROY:
-       PostQuitMessage(0);  //プログラム終了
+    case WM_MOUSEMOVE:
+        Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
         return 0;
+
+    case WM_DESTROY:
+         PostQuitMessage(0);  //プログラム終了
+         return 0;
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
