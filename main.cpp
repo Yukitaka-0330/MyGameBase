@@ -3,6 +3,7 @@
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
+#include "Engine/RootJob.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -10,7 +11,7 @@ const char* TITLE_NAME = "サンプルゲーム";  //タイトル名
 const int WINDOW_WIDTH = 800;  //ウィンドウの幅
 const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
-
+RootJob* pRootJob = nullptr;
 
 
 //プロトタイプ宣言
@@ -63,6 +64,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
     HRESULT hr; //こっから下はhr使えるよ
     //Direct3D初期化
+    //Input::Initialize();
     hr = Direct3D::Initialize(winW, winH, hWnd);
     if (FAILED(hr))
     {
@@ -70,6 +72,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     }
 
     Camera::Initialize();
+
+    pRootJob = new RootJob;
+    pRootJob->Initialize();
 
 
    if(FAILED(hr))
@@ -92,16 +97,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
         //メッセージなし
         else
-        {
-            Camera::Update();
-            //ゲームの処理
+        {   //ゲームの処理
+            Camera::Update(); //カメラの更新
+
+            //入力の処理
+            Input::Update();
+            pRootJob->Update();
+            
+            //描画
             Direct3D::BeginDraw();
             
+
             Direct3D::EndDraw();
           
         }
     }
-    
+    pRootJob->Release();
+    Input::Release();
     Direct3D::Release();
     return 0;
 }
