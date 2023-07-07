@@ -1,13 +1,20 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+#define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;} //開放処理
+#define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;} //開放処理
+
+
+//前方宣言
+class Fbx;
 //■■シーンを管理するクラス
-class PlayScene : public GameObject
+class Player : public GameObject
 {
+	Fbx* pFbx;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	PlayScene(GameObject* parent);
+	Player(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
@@ -21,4 +28,5 @@ public:
 	//開放
 	void Release() override;
 };
+
 

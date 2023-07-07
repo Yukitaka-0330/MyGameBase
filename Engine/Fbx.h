@@ -5,7 +5,6 @@
 #include "Transform.h"
 #include<vector>
 
-
 #pragma comment(lib, "LibFbxSDK-Md.lib")
 #pragma comment(lib, "LibXml2-Md.lib")
 #pragma comment(lib, "zlib-Md.lib")

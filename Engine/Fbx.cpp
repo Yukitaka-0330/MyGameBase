@@ -1,10 +1,12 @@
-
 #include <assert.h>
 #include "Fbx.h"
 #include "Direct3D.h"
 #include "Camera.h"
 #include "Texture.h"
 
+//ポインタ変数はリリース
+//newはデリーと
+//ポインタをnewしたやつはリリースしてからデリーと
 Fbx::Fbx() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr),
 			vertexCount_(NULL), polygonCount_(NULL), materialCount_(NULL),indexCount_(NULL)
 {
@@ -313,4 +315,8 @@ void Fbx::Draw(Transform& transform)
 
 void Fbx::Release()
 {
+	SAFE_RELEASE(pVertexBuffer_);
+	SAFE_DELETE(pIndexBuffer_);
+	SAFE_RELEASE(pConstantBuffer_);
+	SAFE_DELETE(pMaterialList_);
 }
