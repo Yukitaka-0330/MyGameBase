@@ -13,7 +13,7 @@ protected:
 	Transform	transform_;
 	GameObject* pParent_;
 	string	objectName_;
-	bool IsDead;
+	bool isDead;
 
 public:
 	GameObject();
@@ -31,13 +31,13 @@ public:
 	void ReleaseSub();
 
 	template <class T>
-	void Instantiate(GameObject* parent)
+	GameObject* Instantiate(GameObject* parent)
 	{
 		T* pObject;
 		pObject = new T(parent);
 		pObject->Initialize();
 		parent->childList_.push_back(pObject);
-		//return pObject;
+		return pObject;
 	}
 
 };

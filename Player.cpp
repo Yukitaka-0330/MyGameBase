@@ -1,4 +1,5 @@
 #include "Player.h"
+#include"Playerchild.h"
 #include "Engine/Fbx.h"
 #include "Engine/Input.h"
 
@@ -9,6 +10,8 @@ Player::Player(GameObject* parent):
 
 void Player::Initialize()
 {
+	Instantiate<Playerchild>(this);
+
 	pFbx = new Fbx;
 	pFbx->Load("Assets/Oden.fbx");
 	this->transform_.scale_.x = 0.5f;

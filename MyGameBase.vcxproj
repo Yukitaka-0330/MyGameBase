@@ -149,6 +149,7 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Playerchild.cpp" />
     <ClCompile Include="PlayScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Playerchild.h" />
     <ClInclude Include="PlayScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
