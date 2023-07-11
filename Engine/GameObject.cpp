@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject() : pParent_(nullptr), objectName_("")
+GameObject::GameObject() : pParent_(nullptr), objectName_(""),isDead(false)
 {
 }
 
@@ -38,5 +38,10 @@ void GameObject::ReleaseSub()
 	{
 		(*itr)->ReleaseSub();
 	}
+
+}
+
+void GameObject::KillMe()
+{
 
 }

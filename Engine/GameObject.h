@@ -16,6 +16,8 @@ protected:
 	GameObject* pParent_;
 	string	objectName_;
 
+	bool isDead;
+
 public:
 	GameObject();
 	GameObject(GameObject* parent, const std::string& name);
@@ -38,5 +40,7 @@ public:
 		pObject->Initialize();
 		parent->childList_.push_back(pObject);
 	}
+
+	void KillMe();
 };
 

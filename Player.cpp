@@ -17,11 +17,12 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	this->transform_.rotate_.y += 1;
+	this->transform_.rotate_.y++;
 }
 
 void Player::Draw()
 {
+	
 	pFbx->Draw(this->transform_);
 }
 
