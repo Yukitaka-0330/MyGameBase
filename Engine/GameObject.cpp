@@ -12,12 +12,6 @@ GameObject::~GameObject()
 {
 }
 
-// íœ‚·‚é‚©‚Ç‚¤‚©
-//bool GameObject::IsDead()
-//{
-//	return (state_.dead != 0);
-//}
-
 // ©•ª‚ğíœ‚·‚é
 void GameObject::KillMe()
 {
