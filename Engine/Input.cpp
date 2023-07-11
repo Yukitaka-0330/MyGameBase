@@ -39,7 +39,7 @@ namespace Input
 	bool IsKeyDown(int keyCode)
 	{
 		//¡‚Í‰Ÿ‚µ‚Ä‚ÄA‘O‰ñ‚Í‰Ÿ‚µ‚Ä‚È‚¢
-		if (IsKey(keyCode) & 0x80 && !(prevKeyState[keyCode] & 0x80))
+		if (IsKey(keyCode)&& !(prevKeyState[keyCode] & 0x80))
 		{
 			return true;
 		}

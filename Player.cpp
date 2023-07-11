@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Engine/Fbx.h"
+#include "Engine/Input.h"
 
 Player::Player(GameObject* parent):
 	GameObject(parent,"Player"), pFbx(nullptr)
@@ -18,6 +19,12 @@ void Player::Initialize()
 void Player::Update()
 {
 	this->transform_.rotate_.y++;
+
+	if (Input::IsKey(DIK_K))
+	{
+		//this->transform_.scale_.x += 0.5f;
+		KillMe();
+	}
 }
 
 void Player::Draw()

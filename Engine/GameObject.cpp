@@ -1,47 +1,63 @@
 #include "GameObject.h"
-
-GameObject::GameObject() : pParent_(nullptr), objectName_(""),isDead(false)
+#include "Direct3D.h"
+GameObject::GameObject() : pParent_(nullptr), objectName_("")
 {
 }
 
-GameObject::GameObject(GameObject* parent, const string& name):pParent_(parent),objectName_(name)
+GameObject::GameObject(GameObject* parent, const std::string& name) :pParent_(parent), objectName_(name),IsDead(false)
 {
 }
 
 GameObject::~GameObject()
 {
-	delete pParent_;
+}
+
+// íœ‚·‚é‚©‚Ç‚¤‚©
+//bool GameObject::IsDead()
+//{
+//	return (state_.dead != 0);
+//}
+
+// Ž©•ª‚ðíœ‚·‚é
+void GameObject::KillMe()
+{
+	IsDead = true;
+}
+
+
+void GameObject::UpdateSub()
+{
+	Update();
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	{
+		(*itr)->UpdateSub();
+	}
+	for (auto itr = childList_.begin(); itr != childList_.end();)
+	{
+		if ((*itr)->IsDead == true)
+		{
+			ReleaseSub();
+			SAFE_DELETE(*itr);
+			itr = childList_.erase(itr);
+		}
+		else {
+			itr++;
+		}
+	}
 }
 
 void GameObject::DrawSub()
 {
-	Draw();//Ž©•ª‚ÌdrawŠÖ”‚ðŒÄ‚Ô
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)//‚±‚±‚ÅŽq‹Ÿ‚ð’T‚µ‚Ä‚¢‚­‚£
-	{
+	Draw();
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 		(*itr)->DrawSub();
-	}
-}
-
-void GameObject::UpdateSub()
-{
-	Update(); //Ž©•ª‚ÌUpdateŠÖ”‚ðŒÄ‚Ô
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) //‚±‚±‚ÅŽq‹Ÿ‚ð’T‚µ‚Ä‚¢‚­‚£
-	{
-		(*itr)->UpdateSub();
-	}
 }
 
 void GameObject::ReleaseSub()
 {
-	Release();//Ž©•ª‚ÌReleaseŠÖ”‚ðŒÄ‚Ô
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) //‚±‚±‚ÅŽq‹Ÿ‚ð’T‚µ‚Ä‚¢‚­‚£
-	{
+	Release();
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 		(*itr)->ReleaseSub();
-	}
-
 }
 
-void GameObject::KillMe()
-{
 
-}

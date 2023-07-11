@@ -1,22 +1,19 @@
 #pragma once
-
-#include "Transform.h"
-#include <string>
 #include <list>
+#include <string>
+#include "Transform.h"
 
 using std::string;
-using std::list;
-
+using std::list
+;
 class GameObject
 {
 protected:
-
 	list <GameObject*> childList_;
 	Transform	transform_;
 	GameObject* pParent_;
 	string	objectName_;
-
-	bool isDead;
+	bool IsDead;
 
 public:
 	GameObject();
@@ -28,6 +25,7 @@ public:
 	virtual void Draw() = 0;
 	virtual void Release() = 0;
 
+	void KillMe();
 	void DrawSub();
 	void UpdateSub();
 	void ReleaseSub();
@@ -39,8 +37,7 @@ public:
 		pObject = new T(parent);
 		pObject->Initialize();
 		parent->childList_.push_back(pObject);
+		//return pObject;
 	}
 
-	void KillMe();
 };
-
