@@ -11,7 +11,8 @@ void Playerchild::Initialize()
 {
 	pFbx = new Fbx;
 	pFbx->Load("Assets/Oden.fbx");
-	this->transform_.position_.x = -5.0f;
+	this->transform_.position_.x = -2.0f;
+	this->transform_.position_.y = 1.0f;
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;
 	this->transform_.scale_.z = 0.2f;
@@ -19,18 +20,15 @@ void Playerchild::Initialize()
 
 void Playerchild::Update()
 {
-	this->transform_.rotate_.y++;
-
-	if (Input::IsKey(DIK_K))
+	//this->transform_.rotate_.y++;
+	if (Input::IsKey(DIK_ESCAPE))
 	{
-		//this->transform_.scale_.x += 0.5f;
-		KillMe();
+		this->KillMe();
 	}
 }
 
 void Playerchild::Draw()
 {
-
 	pFbx->Draw(this->transform_);
 }
 

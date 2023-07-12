@@ -10,13 +10,17 @@ Player::Player(GameObject* parent):
 
 void Player::Initialize()
 {
-	Instantiate<Playerchild>(this);
-
 	pFbx = new Fbx;
 	pFbx->Load("Assets/Oden.fbx");
 	this->transform_.scale_.x = 0.5f;
 	this->transform_.scale_.y = 0.5f;
 	this->transform_.scale_.z = 0.5f;
+	Instantiate<Playerchild>(this);
+
+	GameObject * pCo2 = Instantiate<Playerchild>(this);
+	pCo2->SetPosition(XMFLOAT3(2, 1, 0));
+	pCo2->SetRotate(XMFLOAT3(0, 90, 0));
+	pCo2->SetScale(XMFLOAT3(2, 2, 2));
 }
 
 void Player::Update()
@@ -25,8 +29,14 @@ void Player::Update()
 
 	if (Input::IsKey(DIK_K))
 	{
-		//this->transform_.scale_.x += 0.5f;
-		KillMe();
+		transform_.position_.x -= 0.1f;
+		//KillMe();
+	}
+
+	if (Input::IsKey(DIK_L))
+	{
+		transform_.position_.x += 0.1f;
+		//KillMe();
 	}
 }
 

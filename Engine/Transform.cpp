@@ -34,6 +34,12 @@ void Transform::Calclation()
 
 XMMATRIX Transform::GetWorldMatrix()
 {
+	if (pParent_) //pParent_がnullptr以外の時
+	{
+		//親があったら親のワールドマトリックスを掛ける
+		return (matScale_ * matRotate_ * matTranslate_) *pParent_->GetWorldMatrix();
+	}
+	else
 	return matScale_ * matRotate_ * matTranslate_;
 }
 
