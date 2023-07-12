@@ -46,6 +46,4 @@ void Player::Draw()
 
 void Player::Release()
 {
-	//SAFE_RELEASE(pFbx);
-	//SAFE_DELETE(pFbx);
 }
