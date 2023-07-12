@@ -80,9 +80,3 @@ void GameObject::SetScale(XMFLOAT3 _scale)
 	this->transform_.scale_ = _scale;
 }
 
-//void GameObject::SetPosition(float x, float y, float z)
-//{
-//	SetPosition(XMFLOAT3(x, y, z));
-//}
-
-

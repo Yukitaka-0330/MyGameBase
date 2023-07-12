@@ -19,8 +19,6 @@ void Player::Initialize()
 
 	GameObject * pCo2 = Instantiate<Playerchild>(this);
 	pCo2->SetPosition(XMFLOAT3(2, 1, 0));
-	pCo2->SetRotate(XMFLOAT3(0, 90, 0));
-	pCo2->SetScale(XMFLOAT3(2, 2, 2));
 }
 
 void Player::Update()
