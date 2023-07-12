@@ -184,6 +184,7 @@
     <ClInclude Include="Engine\Sprite.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Playerchild.h" />
     <ClInclude Include="PlayScene.h" />

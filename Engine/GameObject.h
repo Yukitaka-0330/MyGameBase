@@ -30,10 +30,10 @@ public:
 	void UpdateSub();
 	void ReleaseSub();
 
-	template<class GameObject> void SetTransform(GameObject SetPosition())
+	/*template<class GameObject> void SetTransform(GameObject SetPosition())
 	{
 
-	}
+	}*/
 	void SetPosition(XMFLOAT3 _position);
 	void SetRotate(XMFLOAT3 _rotate);
 	void SetScale(XMFLOAT3 _scale);

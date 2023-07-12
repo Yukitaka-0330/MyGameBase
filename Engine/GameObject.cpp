@@ -55,15 +55,17 @@ void GameObject::DrawSub()
 
 void GameObject::ReleaseSub()
 {
-	Release();
+	
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 		(*itr)->ReleaseSub();
+
+	Release();
 }
 
-void GameObject::SetTrans(Transform _transform)
-{
-	this->transform_ = _transform;
-}
+//void GameObject::SetTrans(Transform _transform)
+//{
+//	this->transform_ = _transform;
+//}
 
 void GameObject::SetPosition(XMFLOAT3 _position)
 {

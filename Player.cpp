@@ -27,8 +27,8 @@ void Player::Update()
 
 	if (Input::IsKey(DIK_K))
 	{
-		transform_.position_.x -= 0.1f;
-		//KillMe();
+		//transform_.position_.x -= 0.1f;
+		KillMe();
 	}
 
 	if (Input::IsKey(DIK_L))
@@ -46,6 +46,6 @@ void Player::Draw()
 
 void Player::Release()
 {
-	SAFE_RELEASE(pFbx);
-	SAFE_DELETE(pFbx);
+	//SAFE_RELEASE(pFbx);
+	//SAFE_DELETE(pFbx);
 }
