@@ -1,7 +1,10 @@
 #include"Model.h"
-
+#include"Direct3D.h"
 namespace Model
 {
+	//モデルのポインタをぶち込んでいくベクタ
+	vector<ModelData*>_datas;
+
 	int Load(std::string fileName)
 	{
 		//ファイル名のモデルを読み込んで、同じモデル名のものがあったらそのモデル番号(配列のインデックス-1)を返す関数
@@ -39,5 +42,27 @@ namespace Model
 	{
 		//モデル番号は、_datasのインデックス
 		_datas[hModel]->pfbx_->Draw(_datas[hModel]->Transform_);
+	}
+	void Release()
+	{
+		bool isRefferd = false; //参照されているか
+		for (int i= 0; i<_datas.size();i++)
+		{
+			for (int j = i + 1; j < _datas.size(); j++)
+			{
+				if (_datas[i]->pfbx_ == _datas[i]->pfbx_)
+				{
+					isRefferd = true;
+					break;
+				}
+			}
+			if (isRefferd == false)
+			{
+				SAFE_DELETE(_datas[i]->pfbx_);
+			}
+			SAFE_DELETE(_datas[i]);
+		}
+		_datas.clear();
+		
 	}
 }

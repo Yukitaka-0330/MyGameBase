@@ -1,16 +1,17 @@
 #include "Playerchild.h"
 #include "Engine/Fbx.h"
 #include "Engine/Input.h"
+#include "Engine/Model.h"
 
 Playerchild::Playerchild(GameObject* parent) :
-	GameObject(parent, "Playerchild"), pFbx(nullptr)
+	GameObject(parent, "Playerchild"),hModel_(-1)
 {
 }
 
 void Playerchild::Initialize()
 {
-	pFbx = new Fbx;
-	pFbx->Load("Assets/Oden.fbx");
+	hModel_ = Model::Load("Assets/Oden.fbx");
+	assert(hModel_ >= 0);
 	/*this->transform_.position_.x = -2.0f;
 	this->transform_.position_.y = 1.0f;*/
 	this->transform_.rotate_.x = 90;
@@ -31,12 +32,11 @@ void Playerchild::Update()
 
 void Playerchild::Draw()
 {
-	
-	pFbx->Draw(this->transform_);
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 void Playerchild::Release()
 {
-	SAFE_RELEASE(pFbx);
-	SAFE_DELETE(pFbx);
+	
 }

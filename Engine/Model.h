@@ -1,8 +1,8 @@
 #pragma once
 #include<string>
 #include<vector>
-#include"Engine/Fbx.h"
-#include"Engine/Transform.h"
+#include"Fbx.h"
+#include"Transform.h"
 
 using std::string;
 using std::vector;
@@ -12,15 +12,12 @@ namespace Model
 	struct ModelData
 	{
 		//FBX
-		Fbx *pfbx_;
+		Fbx* pfbx_;
 		//トランスフォーム
 		Transform Transform_;
 		//ファイル名
 		string mFileName_;
 	};
-	//モデルのポインタをぶち込んでいくベクタ
-	vector<ModelData*>_datas;
-
 
 	//モデルをロード
 	//引数：fileName　ファイル名
@@ -36,4 +33,6 @@ namespace Model
 	//引数：hModel	描画したいモデルの番号
 	//引数：matrix	ワールド行列
 	void Draw(int hModel);
+
+	void Release();
 }
