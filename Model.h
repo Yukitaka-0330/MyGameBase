@@ -1,19 +1,39 @@
 #pragma once
-//必要なインクルードを書く
+#include<string>
+#include<vector>
+#include"Engine/Fbx.h"
+#include"Engine/Transform.h"
+
+using std::string;
+using std::vector;
 
 namespace Model
 {
 	struct ModelData
 	{
 		//FBX
+		Fbx *pfbx_;
 		//トランスフォーム
+		Transform Transform_;
 		//ファイル名
+		string mFileName_;
 	};
-	//モデルのポインタをぶち込んでいく
-}
+	//モデルのポインタをぶち込んでいくベクタ
+	vector<ModelData*>_datas;
 
-//int Model::Load(std::string fileName)
-//{
-//	//ファイル名のモデルを読み込んで、同じモデル名のものがあったらそのモデル番号(配列のインデックス-1)を返す関数
-//	//同じ名前のモデルがなかったら、モデルを読み込んで、ベクタに追加
-//}
+
+	//モデルをロード
+	//引数：fileName　ファイル名
+	//戻値：そのモデルデータに割り当てられた番号
+	int Load(std::string fileName);
+
+	//ワールド行列を設定
+	//引数：hModel	設定したいモデルの番号
+	//引数：matrix	ワールド行列
+	void SetTransform(int hModel, Transform& transform);
+
+	//描画
+	//引数：hModel	描画したいモデルの番号
+	//引数：matrix	ワールド行列
+	void Draw(int hModel);
+}
