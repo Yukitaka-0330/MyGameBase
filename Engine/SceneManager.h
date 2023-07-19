@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
-
-#define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;} //開放処理
+#include "Direct3D.h"
 
 //ゲームシーンを列挙
 enum SCENE_ID

@@ -37,8 +37,13 @@ public:
 	void SetPosition(XMFLOAT3 _position);
 	void SetRotate(XMFLOAT3 _rotate);
 	void SetScale(XMFLOAT3 _scale);
+	GameObject* FindChildObject(string _objName);
+	GameObject* GetRootJob();
+	GameObject* FindObject(string _objName);
 	
+public:
 
+	//テンプレートの定義
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{
