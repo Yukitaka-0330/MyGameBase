@@ -2,6 +2,7 @@
 #include "Engine/Fbx.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Engine/SphereCollider.h"
 
 Playerchild::Playerchild(GameObject* parent) :
 	GameObject(parent, "Playerchild"),hModel_(-1)
@@ -18,6 +19,8 @@ void Playerchild::Initialize()
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;
 	this->transform_.scale_.z = 0.2f;
+	SphereCollider* col = new SphereCollider(1.0);
+	AddCollider(col);
 }
 
 void Playerchild::Update()
