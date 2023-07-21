@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include "Player.h"
+#include "Enemy.h"
 //コンストラクタ
 PlayScene::PlayScene(GameObject* parent)
 	: GameObject(parent, "PlayScene")
@@ -14,6 +15,7 @@ void PlayScene::Initialize()
 	//pPlayer->Initialize();
 	//childList_.push_back(pPlayer); //PlaySceneの子として、プレイヤーを登録
 	GameObject * pObject = Instantiate<Player>(this);
+	GameObject* pEnemy = Instantiate<Enemy>(this);
 }
 
 //更新

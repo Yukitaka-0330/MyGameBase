@@ -4,7 +4,9 @@
 #include "Transform.h"
 
 using std::string;
-using std::list
+using std::list;
+
+class SphereCollider;
 ;
 class GameObject
 {
@@ -14,6 +16,7 @@ protected:
 	GameObject* pParent_;
 	string	objectName_;
 	bool isDead;
+	SphereCollider* pCollider_;
 
 public:
 	GameObject();
@@ -40,6 +43,9 @@ public:
 	GameObject* FindChildObject(string _objName);
 	GameObject* GetRootJob();
 	GameObject* FindObject(string _objName);
+	void AddCollider(SphereCollider* pCollider);
+	void Collision(GameObject* pTarget);
+	void RoundRobin(GameObject* pTarget);
 	
 public:
 
