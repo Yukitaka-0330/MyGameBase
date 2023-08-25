@@ -19,7 +19,7 @@ void Playerchild::Initialize()
 	this->transform_.scale_.x = 0.2f;
 	this->transform_.scale_.y = 0.2f;
 	this->transform_.scale_.z = 0.2f;
-	SphereCollider* col = new SphereCollider(1.0);
+	SphereCollider* col = new SphereCollider(0.1);
 	AddCollider(col);
 }
 

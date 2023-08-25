@@ -144,6 +144,8 @@ void GameObject::Collision(GameObject* pTarget)
 		return; //自分自身、またはターゲットにコライダーがアタッチされていない
 	}
 
+	
+
 	/*XMVECTOR v
 	{
 		this->transform_.position_.x - pTarget->transform_.position_.x,
@@ -158,20 +160,34 @@ void GameObject::Collision(GameObject* pTarget)
 
 	if (dist <= rDist)
 	{
-		//onCollsion()を呼ぼう
+		OnCollision(pTarget);
  		//double p = 0;
-		KillMe();
+		//KillMe();
 	}
 
 		
 }
 
+ void GameObject::OnCollision(GameObject* pTarget)
+{
+	 /*if (pTarget == this || pTarget->pCollider_ == nullptr)
+	 {
+		 KillMe();
+	 }*/
+}
+
+
 void GameObject::RoundRobin(GameObject* pTarget)
 {
 	if(pCollider_ == nullptr)
 		return;
+
 	if (pTarget->pCollider_ != nullptr) //自分とターゲット
 		Collision(pTarget);
+
+	//if (pTarget->pCollider_ != nullptr) //自分とターゲット
+	//	OnCollision(pTarget);
+
 
 	//自分の子供全部とターゲット
 	for (auto itr = pTarget->childList_.begin();itr != pTarget->childList_.end(); itr++)

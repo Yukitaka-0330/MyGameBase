@@ -17,7 +17,7 @@ void Enemy::Initialize()
 	this->transform_.scale_.y = 0.3f;
 	this->transform_.scale_.z = 0.3f;
 
-	SphereCollider* col = new SphereCollider(1.0f);
+	SphereCollider* col = new SphereCollider(1);
 	AddCollider(col);
 
 }
@@ -35,4 +35,10 @@ void Enemy::Draw()
 
 void Enemy::Release()
 {
+}
+
+//‰½‚©‚É“–‚½‚Á‚½
+void Enemy::OnCollision(GameObject* pTarget)
+{
+	KillMe();
 }
