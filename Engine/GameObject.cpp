@@ -137,36 +137,68 @@ void GameObject::AddCollider(SphereCollider* pCollider)
 	pCollider_ = pCollider;
 }
 
-void GameObject::Collision(GameObject* pTarget)
+float GetVectorLength(const XMVECTOR& vector)
 {
-	if (pTarget == this || pTarget->pCollider_ == nullptr)
-	{
-		return; //自分自身、またはターゲットにコライダーがアタッチされていない
-	}
+	DirectX::XMVECTOR squaredLength = DirectX::XMVector3LengthSq(vector);
 
-	
+	float length;
+	DirectX::XMStoreFloat(&length, DirectX::XMVectorSqrt(squaredLength));
 
-	/*XMVECTOR v
-	{
-		this->transform_.position_.x - pTarget->transform_.position_.x,
-		this->transform_.position_.y - pTarget->transform_.position_.y,
-		this->transform_.position_.z - pTarget->transform_.position_.z,
-	};	
-	XMVECTOR dist = XMVector3Dot(v, v);*/
-	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
-		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
-		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.x - pTarget->transform_.position_.z);
-	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius() * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()));
-
-	if (dist <= rDist)
-	{
-		OnCollision(pTarget);
- 		//double p = 0;
-		//KillMe();
-	}
-
-		
+	return length;
 }
+
+void GameObject::Collision(GameObject* _pTarget)
+
+{
+
+	//ターゲットにコライダーがアタッチされていない
+	if (_pTarget == this || _pTarget->pCollider_ == nullptr) return;
+
+
+	//もし、自分のコライダーとターゲットがぶつかっていたら...
+
+	float dist = GetVectorLength(XMVectorSubtract(XMLoadFloat3(&_pTarget->transform_.position_), XMLoadFloat3(&this->transform_.position_)));
+
+	float rDist = (this->pCollider_->GetRadius() + _pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + _pTarget->pCollider_->GetRadius());
+	if (dist <= rDist) {
+
+		OnCollision(_pTarget);
+
+	}
+
+}
+
+
+//void GameObject::Collision(GameObject* pTarget)
+//{
+//	if (pTarget == this || pTarget->pCollider_ == nullptr)
+//	{
+//		return; //自分自身、またはターゲットにコライダーがアタッチされていない
+//	}
+//
+//	
+//
+//	/*XMVECTOR v
+//	{
+//		this->transform_.position_.x - pTarget->transform_.position_.x,
+//		this->transform_.position_.y - pTarget->transform_.position_.y,
+//		this->transform_.position_.z - pTarget->transform_.position_.z,
+//	};	
+//	XMVECTOR dist = XMVector3Dot(v, v);*/
+//	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
+//		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
+//		+ (transform_.position_.z - pTarget->transform_.position_.z) * (transform_.position_.z - pTarget->transform_.position_.z);
+//	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius() * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()));
+//
+//	if (dist <= rDist)
+//	{
+//		OnCollision(pTarget);
+// 		//double p = 0;
+//		//KillMe();
+//	}
+//
+//		
+//}
 
  void GameObject::OnCollision(GameObject* pTarget)
 {

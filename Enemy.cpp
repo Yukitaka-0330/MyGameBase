@@ -40,5 +40,5 @@ void Enemy::Release()
 //‰½‚©‚É“–‚½‚Á‚½
 void Enemy::OnCollision(GameObject* pTarget)
 {
-	KillMe();
+	KillMe(); 
 }
