@@ -3,11 +3,6 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 
-#define CAM_TYPE_FIXED 0 //固定
-#define CAM_TYPE_TPS_NO_ROT 1//三人称回転なし
-#define CAM_TYPE_TPS_ 2 //三人称
-#define CAM_TYPE_FPS_ 3 //一人称
-
 //コンストラクタ
 Controller::Controller(GameObject* parent)
     :GameObject(parent, "Controller"), hModel_(-1)
@@ -27,6 +22,17 @@ void Controller::Initialize()
 //更新
 void Controller::Update()
 {
+    //Aが押されていたら
+    if (Input::IsKey(DIK_A))
+    {
+        transform_.rotate_.y -= 1.0f;
+    }
+    //Dが押されていたら
+    if (Input::IsKey(DIK_D))
+    {
+        transform_.rotate_.y += 1.0f;
+    }
+
     XMVECTOR vCamPos = XMLoadFloat3(&transform_.position_);
     XMVECTOR vCamMove = { 0.0f ,0.0f ,0.05f , 0.0f };
     XMMATRIX mRotY;
@@ -50,6 +56,7 @@ void Controller::Update()
     XMFLOAT3 camPos;
     XMStoreFloat3(&camPos, vCamPos + vCam);
     Camera::SetPosition(camPos);
+
 }
 
 //描画
