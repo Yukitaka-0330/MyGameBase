@@ -8,6 +8,7 @@ class Controller : public GameObject
 
 public:
     int hModel_;
+    int camType_;
     //コンストラクタ
     Controller(GameObject* parent);
 
