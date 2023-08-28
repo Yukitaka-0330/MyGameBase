@@ -43,7 +43,7 @@ void Controller::Update()
     }
 
     XMStoreFloat3(&transform_.position_, vCamPos);
-    Camera::SetTarget(transform_.position_);
+    
 
     XMVECTOR vCam = { 0, 3, -5, 0 };
     vCam = XMVector3TransformCoord(vCam, mRotY);
