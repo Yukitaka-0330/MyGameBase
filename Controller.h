@@ -7,9 +7,7 @@ class Controller : public GameObject
 {
 
 public:
-    int hModel_;
-    int speedx;
-    int speedy;
+
     //コンストラクタ
     Controller(GameObject* parent);
 

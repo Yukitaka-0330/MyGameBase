@@ -5,7 +5,7 @@
 
 //コンストラクタ
 Controller::Controller(GameObject* parent)
-    :GameObject(parent, "Controller"), hModel_(-1)
+    :GameObject(parent, "Controller")
 {
 }
 
@@ -108,8 +108,6 @@ void Controller::Update()
     XMStoreFloat3(&camPos, vPos + vCam);
     Camera::SetPosition(XMLoadFloat3(&camPos)); //カメラの位置は自撮り棒の先端 (現在地+自撮り棒)
     Camera::SetTarget(XMLoadFloat3(&transform_.position_)); //カメラの見る位置は「このオブジェクトの位置
-    //Camera::SetPosition(vPos + vCam); //カメラの位置は自撮り棒の先端 (現在地+自撮り棒)
-    //Camera::SetTarget(transform_.position_);
 }
 
 //描画
