@@ -99,6 +99,7 @@ void Controller::Update()
     XMStoreFloat3(&camPos, vCamPos + vCam);
     Camera::SetPosition(camPos);
 
+
     //Y軸に回転
     XMVECTOR vCamY = { 0, 6, -10, 0 };
     vCamY = XMVector3TransformCoord(vCam, mRotY);
@@ -106,59 +107,68 @@ void Controller::Update()
     XMStoreFloat3(&camPosY, vCamPos + vCamY);
     Camera::SetPosition(camPosY);
 
+
+    ////左回転
+    //if (Input::IsKey(DIK_LEFT))
+    //{
+    //    transform_.rotate_.y -= 1.0f;
+    //}
+
+    ////右回転
+    //if (Input::IsKey(DIK_RIGHT))
+    //{
+    //    transform_.rotate_.y += 1.0f;
+    //}
+
+    ////transform_.rotate_.yの値に合わせてＹ軸回転させる行列
     //XMMATRIX mRotate = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-    //XMMATRIX mRotateX = XMMatrixRotationX(XMConvertToRadians(transform_.rotate_.x));
+
+    ////現在位置をベクトルにしておく
     //XMVECTOR vPos = XMLoadFloat3(&transform_.position_);
-    //XMVECTOR vCam = XMVectorSet(0.0f, 6.0f, -10.0f, 0.0f);
-    //XMFLOAT3 move = XMFLOAT3(0, 0, 0);
-    //XMVECTOR vMove;
 
-    //if (Input::IsKey(DIK_A))
-    //{
-    //    move = XMFLOAT3(-0.1, 0, 0);
-    //}
+    ////前後移動ベクトル
+    //XMFLOAT3 frontMove = { 0, 0, 0.1f };                //奥向きのXMFLOAT3構造体を用意し
+    //XMVECTOR vMove = XMLoadFloat3(&frontMove);               //それをベクトルにする
+    //vMove = XMVector3TransformCoord(vMove, mRotate);    //戦車の向きに合わせて回転
 
-    //if (Input::IsKey(DIK_D))
-    //{
-    //    move = XMFLOAT3(0.1, 0, 0);
-    //}
+   
 
     //if (Input::IsKey(DIK_W))
     //{
-    //    move = XMFLOAT3(0, 0, 0.1);
-    //}
-
-    //if (Input::IsKey(DIK_S))
-    //{
-    //    move = XMFLOAT3(0, 0, -0.1);
-    //}
-
-    //if (Input::IsKey(DIK_RIGHT))
-    //{
-    //    transform_.rotate_.y += 1;
-    //}
-
-    //if (Input::IsKey(DIK_LEFT))
-    //{
-    //    transform_.rotate_.y -= 1;
-    //}
-    //if (Input::IsKey(DIK_UP))
-    //{
-    //  transform_.rotate_.x += 1;
-    //}
-    //if (Input::IsKey(DIK_DOWN))
-    //{
-    //    transform_.rotate_.x -= 1;
-    //}
-
-    //    vMove = XMLoadFloat3(&move);
-    //    vMove = XMVector3TransformCoord(vMove, mRotate);
     //    vPos += vMove;
     //    XMStoreFloat3(&transform_.position_, vPos);
-    //    vCam = XMVector3TransformCoord(vCam, mRotateX * mRotate);//vCamを回す
-    //    Camera::SetPosition(vPos + vCam);
-    //    Camera::SetTarget(XMVectorSet(transform_.position_.x, transform_.position_.y, transform_.position_.z, 0));
-   
+    //}
+    //if (Input::IsKey(DIK_S))
+    //{
+    //    vPos -= vMove;
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+
+    ////左右移動ベクトル
+    //XMFLOAT3 rightMove = { 0.1f, 0, 0 };                //右向きのXMFLOAT3構造体を用意し
+    //vMove = XMLoadFloat3(&rightMove);               //それをベクトルにする
+    //vMove = XMVector3TransformCoord(vMove, mRotate);    //戦車の向きに合わせて回転
+
+
+    //if (Input::IsKey(DIK_D))
+    //{
+    //    vPos += vMove;
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+    //if (Input::IsKey(DIK_A))
+    //{
+    //    vPos -= vMove;
+    //    XMStoreFloat3(&transform_.position_, vPos);
+    //}
+
+
+    ////カメラ
+    //XMVECTOR vCam = XMVectorSet(0, 10, -10, 0);
+    //vCam = XMVector3TransformCoord(vCam, mRotate);
+    //XMFLOAT3 camPos;
+    //XMStoreFloat3(&camPos, vPos + vCam);
+    //Camera::SetPosition(XMLoadFloat3(&camPos));
+    //Camera::SetTarget(XMLoadFloat3(&transform_.position_));        //カメラの焦点はプレイヤーの位置
 }
 
 //描画
