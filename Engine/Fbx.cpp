@@ -324,7 +324,7 @@ void Fbx::Release()
 	SAFE_DELETE(pMaterialList_);
 }
 
-void Fbx::RayCast(RayCastDate& rayData)
+void Fbx::RayCast(RayCastData& rayData)
 {
 	for (int material = 0; material < materialCount_; material++)
 	{

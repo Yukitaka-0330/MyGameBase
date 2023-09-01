@@ -16,7 +16,7 @@ class Texture; //前方宣言　cppでヘッダーをインクルードすればよい
 
 using namespace std;
 
-struct RayCastDate
+struct RayCastData
 {
 	XMFLOAT4 start;
 	XMFLOAT4 dir;
@@ -78,7 +78,7 @@ public:
 	void    Draw(Transform& transform);
 	void    Release();
 
-	void RayCast(RayCastDate& rayData);
+	void RayCast(RayCastData& rayData);
 
 	
 };
