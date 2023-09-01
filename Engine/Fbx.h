@@ -16,6 +16,15 @@ class Texture; //前方宣言　cppでヘッダーをインクルードすればよい
 
 using namespace std;
 
+struct RayCastDate
+{
+	XMFLOAT4 start;
+	XMFLOAT4 dir;
+	/*XMVECTOR start;
+	XMVECTOR dir;*/
+	bool hit;
+};
+
 class Fbx
 {
 	struct CONSTANT_BUFFER
@@ -36,6 +45,7 @@ class Fbx
 		Texture* pTexture;
 		XMFLOAT4	diffuse;
 	};
+	
 
 	ID3D11Buffer* pVertexBuffer_;
 	ID3D11Buffer** pIndexBuffer_;
@@ -44,6 +54,8 @@ class Fbx
 	//vector<int>indexCount_;
 	int* indexCount_;
 
+	VERTEX* pVertices_;
+	int** ppIndex_;
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
@@ -65,6 +77,8 @@ public:
 	HRESULT Load(std::string fileName);
 	void    Draw(Transform& transform);
 	void    Release();
+
+	void RayCast(RayCastDate& rayData);
 
 	
 };

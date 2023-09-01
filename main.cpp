@@ -26,14 +26,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
-	//XMVECTOR beginP = XMVectorSet(1, 5, 1, 0);
-	//XMVECTOR dirvec = XMVectorSet(0, -1, 0, 0);
-	//XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
-	//XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
-	//XMVECTOR P3 = XMVectorSet(3, 0, 0, 0);
-	//float dist; //距離
-	//bool result = TriangleTests::Intersects(beginP, dirvec, P1, P2, P3, dist);
-	//int a;
+	XMVECTOR beginP = XMVectorSet(1, 5, 1, 0);
+	XMVECTOR dirvec = XMVectorSet(0, -1, 0, 0);
+	XMVECTOR P1 = XMVectorSet(0, 0, 0, 0);
+	XMVECTOR P2 = XMVectorSet(0, 0, 3, 0);
+	XMVECTOR P3 = XMVectorSet(3, 0, 0, 0);
+	float dist; //距離
+	bool result = TriangleTests::Intersects(beginP, dirvec, P1, P2, P3, dist);
+	int a;
 
 	//ウィンドウクラス（設計図）を作成
 	WNDCLASSEX wc;
