@@ -82,7 +82,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	}
 	Fbx* pFbx = new Fbx;
 	pFbx->Load("Assets/BoxDefault.fbx");
-	RayCastData ray;
+	RayCastData ray{};
 	ray.start = { 0,10,0,0};
 	//ray.start = XMFLOAT4(0, 10, 0, 0);
 	ray.dir = { 0,-1,0,0 };
