@@ -6,8 +6,6 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
-#include "DirectXCollision.h"
-
 #pragma comment(lib, "winmm.lib")
 
 
@@ -84,8 +82,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	}
 	Fbx* pFbx = new Fbx;
 	pFbx->Load("Assets/BoxDefault.fbx");
-	RayCastDate ray;
-	ray.start = { 0,10,0,0 };
+	RayCastData ray;
+	ray.start = { 0,10,0,0};
+	//ray.start = XMFLOAT4(0, 10, 0, 0);
 	ray.dir = { 0,-1,0,0 };
 	pFbx->RayCast(ray);
 
