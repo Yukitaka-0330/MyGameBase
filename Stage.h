@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Windows.h"
 
 namespace
 {
@@ -27,6 +28,9 @@ class Stage : public GameObject
 
     }table_[XSIZE][ZSIZE];
 
+    int mode_;  //0:è„Ç∞ÇÈ 1:â∫Ç∞ÇÈ 2:éÌóﬁÇïœÇ¶ÇÈ
+    int select_;    //éÌóﬁ
+
 public:
     
     int rands = 0;
@@ -50,5 +54,6 @@ public:
 
     void SetBlockType(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
+    BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 };
 

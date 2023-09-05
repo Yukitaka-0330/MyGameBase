@@ -6,7 +6,10 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
+
 #include "resource.h"
+#include "Stage.h"
+
 #pragma comment(lib, "winmm.lib")
 
 
@@ -185,11 +188,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+//本物のダイアログプロシージャ
 BOOL CALLBACK DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	switch (msg)
-	{
-
-	}
-	return FALSE;
+	Stage* pStage = (Stage*)pRootJob->FindObject("Stage");
+	return pStage->DialogProc(hDlg, msg, wParam, lParam);
+	//((Stage*)pRootJob->FindObject("Stage"))->DialogProc(hDlg, msg, wParam, lParam); //1行var
 }

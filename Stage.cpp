@@ -1,9 +1,10 @@
 #include "Stage.h"
 #include "Engine/Model.h"
+#include "resource.h"
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
-    :GameObject(parent, "Stage")
+    :GameObject(parent, "Stage"), select_(0)
 {
     for (int i = 0; i < MODEL_NUM; i++)
         hModel_[i] = -1;
@@ -100,4 +101,30 @@ void Stage::SetBlockType(int _x, int _z, BLOCKTYPE _type)
 void Stage::SetBlockHeight(int _x, int _z, int _height)
 {
     table_[_x][_z].height = _height;
+}
+
+//偽のダイアログプロシージャ
+BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+        //ダイアログができたとき
+    case WM_INITDIALOG:
+        // GetDlgItem(hDlg, IDC_RADIO_UP);
+        SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK, BST_CHECKED, 0);
+
+        //コンボボックスの初期値
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"デフォルト");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"レンガ");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"草");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"砂");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"水");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
+
+        return TRUE;
+
+    case WM_COMMAND:
+        select_ = SendMessage(GetDlgItem(hDlg, IDD_DIALOG1), CB_GETCURSEL, 0,0);
+    }
+    return FALSE;
 }
