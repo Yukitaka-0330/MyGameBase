@@ -71,15 +71,15 @@ namespace Input
 		return false;
 	}
 
-	XMVECTOR GetMousePosition()
+	/*XMVECTOR GetMousePosition()
 	{
 		return mousePosition;
-	}
+	}*/
 
-	void SetMousePosition(int x, int y)
+	/*void SetMousePosition(int x, int y)
 	{
 		mousePosition = XMVectorSet((float)x, (float)y, 0, 0);
-	}
+	}*/
 
 	void Release()
 	{
@@ -110,7 +110,7 @@ namespace Input
 	bool IsMouseButtonDown(int buttonCode)
 	{
 		//¡‰Ÿ‚µ‚Ä‚È‚­‚ÄA‘O‰ñ‚Í‰Ÿ‚µ‚Ä‚é
-		if (!IsMouseButton(buttonCode) && !(prevMouseState_.rgbButtons[buttonCode]) & 0x80)
+		if (!IsMouseButton(buttonCode) && !(prevMouseState_.rgbButtons[buttonCode] & 0x80))
 		{
 			return true;
 		}
@@ -129,8 +129,8 @@ namespace Input
 	{
 		mousePos_.x = x;
 		mousePos_.y = y;
-		string resStr = std::to_string(x) + "," + std::to_string(y);
-		//OutputDebugString(resStr, c_str());
+		string resStr = std::to_string(x) + "," + std::to_string(y) + "\n";
+		OutputDebugString(resStr.c_str());
 	}
 
 

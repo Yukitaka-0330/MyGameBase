@@ -15,8 +15,8 @@ namespace Input
 	bool IsKey(int keyCode); //押されている時
 	bool IsKeyDown(int keyCode); //押された瞬間
 	bool IsKeyUp(int keyCode); //離した瞬間
-	XMVECTOR GetMousePosition();
-	void SetMousePosition(int x, int y);
+	//XMVECTOR GetMousePosition();
+	//void SetMousePosition(int x, int y);
 	void Release();
 
 	bool IsMouseButton(int buttonCode);//マウスのボタンが押されているか調べる
