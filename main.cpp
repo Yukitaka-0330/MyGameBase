@@ -85,13 +85,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	{
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
-	Fbx* pFbx = new Fbx;
-	pFbx->Load("Assets/BoxDefault.fbx");
-	RayCastData ray{};
-	ray.start = { 0,10,0,0 };
-	//ray.start = XMFLOAT4(0, 10, 0, 0);
-	ray.dir = { 0,-1,0,0 };
-	pFbx->RayCast(ray);
+	////////////// RayCast テストコード //////////////
+	//Fbx* pFbx = new Fbx;
+	//pFbx->Load("Assets/BoxDefault.fbx");
+	//RayCastData ray{};
+	//ray.start = { 0,10,0,0 };
+	////ray.start = XMFLOAT4(0, 10, 0, 0);
+	//ray.dir = { 0,-1,0,0 };
+	//pFbx->RayCast(ray);
+	/////////////////////////////////////////////////
 
 	//カメラの初期化
 	Camera::Initialize();
@@ -181,8 +183,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+		//ウィンドウを閉じた
 	case WM_DESTROY:
 		PostQuitMessage(0);  //プログラム終了
+		return 0;
+
+		//マウスが動いた
+	case WM_MOUSEMOVE:
+		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
