@@ -45,18 +45,18 @@ void Controller::Update()
     if (Input::IsKey(DIK_UP))
     {
         transform_.rotate_.x += 1.0f;
-        if (transform_.rotate_.x > 89)
+        if (transform_.rotate_.x > 43)
         {
-            transform_.rotate_.x = 89;
+            transform_.rotate_.x = 43;
         }
     }
 
     if (Input::IsKey(DIK_DOWN))
     {
         transform_.rotate_.x -= 1.0f;
-        if (transform_.rotate_.x < 0)
+        if (transform_.rotate_.x < -45)
         {
-            transform_.rotate_.x = 0;
+            transform_.rotate_.x = -45;
         }
 
     }
@@ -102,7 +102,7 @@ void Controller::Update()
 
 
     //ƒJƒƒ‰
-    XMVECTOR vCam = XMVectorSet(0, 0, -10, 0); //Ž©ŽB‚è–_—pˆÓ
+    XMVECTOR vCam = XMVectorSet(0, 12, -13, 0); //Ž©ŽB‚è–_—pˆÓ
     vCam = XMVector3TransformCoord(vCam, mRotX * mRotateY); //Ž©ŽB‚è–_‰ñ“]
     XMFLOAT3 camPos;
     XMStoreFloat3(&camPos, vPos + vCam);

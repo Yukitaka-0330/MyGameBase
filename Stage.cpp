@@ -48,7 +48,7 @@ void Stage::Initialize()
         for (int z = 0; z < ZSIZE; z++)
         {
             SetBlockType(x, z, GRASS);
-            SetBlockHeight(x, z, (x%3)+1); //1足さないと1ブロック表示されくなるから注意
+            SetBlockHeight(x, z, (x)+1); //1足さないと1ブロック表示されくなるから注意
         }
             
     }
