@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include "Engine/Model.h"
 #include "resource.h"
+#include "Engine/Direct3D.h"
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
@@ -91,6 +92,37 @@ void Stage::Draw()
 //開放
 void Stage::Release()
 {
+    float w = (float)(Direct3D::scrWidth/2.0f);
+    float h = (float)(Direct3D::scrHeight/2.0f);
+    //0ffsetx,yは 0
+    //minZ = 0 max Z = 1;
+
+    XMMATRIX vp =
+    {
+        w ,0 ,0 ,0,
+        0,-h ,0 ,0,
+        0, 0, 1, 0,
+        w, h, 0, 1,
+    };
+
+    ////ビューポート
+    //XMMATRIX invVP = ;
+    ////プロジェクション変換
+    //XMMATRIX invProj = ;
+    ////ビュー変換
+    //XMMATRIX inView = ;
+
+    //XMFLOAT3 mousePosFront = マウスポジゲット;
+    //mousePosFront.z = 0.0;
+    //XMFLOAT3 mousePosBack = 如妙如妙;
+    //mousePosBack.z = 1.0f;
+
+    //① mouseposFrontをベクトルに変換
+    //② ①にinvVP,invPrj,invViewをかける
+    //③ mousePosBackをベクトルに変換
+    //④ ③にinvVP,invPrj,invViewを掛ける
+    //⑤ ②から④に向かってレイを打つ(とりあえずモデル番号は)hModel[0])
+    //⑥ レイが当たったらブレークポイントで止める
 }
 
 void Stage::SetBlockType(int _x, int _z, BLOCKTYPE _type)

@@ -65,4 +65,9 @@ namespace Model
 		_datas.clear();
 		
 	}
+	void RayCast(int hModel, RayCastData& rayData)
+	{
+		//指定したモデル番号のFBXにレイキャスト!
+		_datas[hModel]->pfbx_->RayCast(rayData);
+	}
 }
