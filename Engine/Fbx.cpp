@@ -339,10 +339,11 @@ void Fbx::RayCast(RayCastData& rayData)
 			XMVECTOR v2 = pVertices_[i2].position;
 
 			XMVECTOR start = XMLoadFloat4(&rayData.start);
+			XMVECTOR startN = XMVector4Normalize(start);
 			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
 			XMVECTOR dirN = XMVector4Normalize(dir);
 
-			rayData.hit = TriangleTests::Intersects(start, dirN, v0, v1, v2,rayData.dist);
+			rayData.hit = TriangleTests::Intersects(startN, dirN, v0, v1, v2,rayData.dist);
 
 			if (rayData.hit)
 			{

@@ -2,6 +2,8 @@
 #include "Engine/Model.h"
 #include "resource.h"
 #include "Engine/Direct3D.h"
+#include "Engine/Camera.h"
+#include "Engine/Input.h"
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
@@ -15,7 +17,7 @@ Stage::Stage(GameObject* parent)
         for (int z = 0; z < ZSIZE; z++)
         {
             SetBlockType(x, z, DEFAULT);
-            table_[x][z].height = 1;
+            //table_[x][z].height = 1;
         }
     }
 }
@@ -61,6 +63,67 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
+
+    float w = (float)(Direct3D::scrWidth / 2.0f);
+    float h = (float)(Direct3D::scrHeight / 2.0f);
+    //0ffsetx,yは 0
+    //minZ = 0 max Z = 1;
+
+    XMMATRIX vp =
+    {
+        w ,0 ,0 ,0,
+        0,-h ,0 ,0,
+        0, 0, 1, 0,
+        w, h, 0, 1,
+    };
+
+    //ビューポート
+    XMMATRIX invVP = XMMatrixInverse(nullptr, vp);
+    //プロジェクション変換
+    XMMATRIX invProj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+    //ビュー変換
+    XMMATRIX inView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+
+    XMFLOAT3 mousePosFront = Input::F3GetMousePosition();
+    mousePosFront.z = 0.0;
+    XMFLOAT3 mousePosBack = Input::F3GetMousePosition();
+    mousePosBack.z = 1.0f;
+
+    //① mouseposFrontをベクトルに変換
+    XMVECTOR vMouseFront = XMLoadFloat3(&mousePosFront);
+    //② ①にinvVP,invPrj,invViewをかける
+    vMouseFront = XMVector3TransformCoord(vMouseFront, invVP * invProj * inView);
+    //③ mousePosBackをベクトルに変換
+    XMVECTOR vMouseBack = XMLoadFloat3(&mousePosBack);
+    //④ ③にinvVP,invPrj,invViewを掛ける
+    vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * inView);
+
+    for (int x = 0; x < 15; x++)
+    {
+        for (int z = 0; z < 15; z++)
+        {
+            for (int y = 0; y < table_[x][z].height + 1; y++)
+            {
+                //⑤ ②から④に向かってレイを打つ(とりあえずモデル番号は)hModel[0])
+                RayCastData data;
+                XMStoreFloat4(&data.start, vMouseFront);
+                XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
+
+                Transform trans;
+                trans.position_.x = x;
+                trans.position_.y = y;
+                trans.position_.z = z;
+                Model::SetTransform(hModel_[0], trans);
+                Model::RayCast(hModel_[0], data);
+
+                //⑥ レイが当たったらブレークポイントで止める
+                if (data.hit)
+                {
+                    break;
+                }
+            }
+        }
+    }
 }
 
 //描画
@@ -92,37 +155,6 @@ void Stage::Draw()
 //開放
 void Stage::Release()
 {
-    float w = (float)(Direct3D::scrWidth/2.0f);
-    float h = (float)(Direct3D::scrHeight/2.0f);
-    //0ffsetx,yは 0
-    //minZ = 0 max Z = 1;
-
-    XMMATRIX vp =
-    {
-        w ,0 ,0 ,0,
-        0,-h ,0 ,0,
-        0, 0, 1, 0,
-        w, h, 0, 1,
-    };
-
-    ////ビューポート
-    //XMMATRIX invVP = ;
-    ////プロジェクション変換
-    //XMMATRIX invProj = ;
-    ////ビュー変換
-    //XMMATRIX inView = ;
-
-    //XMFLOAT3 mousePosFront = マウスポジゲット;
-    //mousePosFront.z = 0.0;
-    //XMFLOAT3 mousePosBack = 如妙如妙;
-    //mousePosBack.z = 1.0f;
-
-    //① mouseposFrontをベクトルに変換
-    //② ①にinvVP,invPrj,invViewをかける
-    //③ mousePosBackをベクトルに変換
-    //④ ③にinvVP,invPrj,invViewを掛ける
-    //⑤ ②から④に向かってレイを打つ(とりあえずモデル番号は)hModel[0])
-    //⑥ レイが当たったらブレークポイントで止める
 }
 
 void Stage::SetBlockType(int _x, int _z, BLOCKTYPE _type)
