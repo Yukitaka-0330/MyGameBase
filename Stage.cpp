@@ -63,6 +63,10 @@ void Stage::Initialize()
 //XV
 void Stage::Update()
 {
+    if ( Input::IsMouseButtonDown(0))
+    {
+        return;
+    }
 
     float w = (float)(Direct3D::scrWidth / 2.0f);
     float h = (float)(Direct3D::scrHeight / 2.0f);
@@ -98,32 +102,36 @@ void Stage::Update()
     //‡C ‡B‚ÉinvVP,invPrj,invView‚ğŠ|‚¯‚é
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * inView);
 
-    for (int x = 0; x < 15; x++)
+    if (Input::IsMouseButtonDown(0))
     {
-        for (int z = 0; z < 15; z++)
+        for (int x = 0; x < 15; x++)
         {
-            for (int y = 0; y < table_[x][z].height + 1; y++)
+            for (int z = 0; z < 15; z++)
             {
-                //‡D ‡A‚©‚ç‡C‚ÉŒü‚©‚Á‚ÄƒŒƒC‚ğ‘Å‚Â(‚Æ‚è‚ ‚¦‚¸ƒ‚ƒfƒ‹”Ô†‚Í)hModel[0])
-                RayCastData data;
-                XMStoreFloat4(&data.start, vMouseFront);
-                XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
-
-                Transform trans;
-                trans.position_.x = x;
-                trans.position_.y = y;
-                trans.position_.z = z;
-                Model::SetTransform(hModel_[0], trans);
-                Model::RayCast(hModel_[0], data);
-
-                //‡E ƒŒƒC‚ª“–‚½‚Á‚½‚çƒuƒŒ[ƒNƒ|ƒCƒ“ƒg‚Å~‚ß‚é
-                if (data.hit)
+                for (int y = 0; y < table_[x][z].height + 1; y++)
                 {
-                    break;
+                    //‡D ‡A‚©‚ç‡C‚ÉŒü‚©‚Á‚ÄƒŒƒC‚ğ‘Å‚Â(‚Æ‚è‚ ‚¦‚¸ƒ‚ƒfƒ‹”Ô†‚Í)hModel[0])
+                    RayCastData data;
+                    XMStoreFloat4(&data.start, vMouseFront);
+                    XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
+
+                    Transform trans;
+                    trans.position_.x = x;
+                    trans.position_.y = y;
+                    trans.position_.z = z;
+                    Model::SetTransform(hModel_[0], trans);
+                    Model::RayCast(hModel_[0], data);
+
+                    //‡E ƒŒƒC‚ª“–‚½‚Á‚½‚çƒuƒŒ[ƒNƒ|ƒCƒ“ƒg‚Å~‚ß‚é
+                    if (data.hit)
+                    {
+                        break;
+                    }
                 }
             }
         }
     }
+    
 }
 
 //•`‰æ
@@ -131,7 +139,6 @@ void Stage::Draw()
 {
     Transform BlockTrans;//TransfromŒ^‚Ì•Ï”
     //TransformŒ^ -> ˆÊ’u,Œü‚«,‘å‚«‚³‚ğˆµ‚¤Œ^
-
     for (int w = 0; w < XSIZE; w++)
     {
         for (int z = 0; z < ZSIZE; z++)
