@@ -63,7 +63,7 @@ void Stage::Initialize()
 //çXêV
 void Stage::Update()
 {
-    if ( Input::IsMouseButtonDown(0))
+    if ( !Input::IsMouseButtonDown(0))
     {
         return;
     }
@@ -102,8 +102,6 @@ void Stage::Update()
     //áC áBÇ…invVP,invPrj,invViewÇä|ÇØÇÈ
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * inView);
 
-    if (Input::IsMouseButtonDown(0))
-    {
         for (int x = 0; x < 15; x++)
         {
             for (int z = 0; z < 15; z++)
@@ -111,7 +109,8 @@ void Stage::Update()
                 for (int y = 0; y < table_[x][z].height + 1; y++)
                 {
                     //áD áAÇ©ÇÁáCÇ…å¸Ç©Ç¡ÇƒÉåÉCÇë≈Ç¬(Ç∆ÇËÇ†Ç¶Ç∏ÉÇÉfÉãî‘çÜÇÕ)hModel[0])
-                    RayCastData data;
+                    RayCastData data{};
+                    data.hit = false;
                     XMStoreFloat4(&data.start, vMouseFront);
                     XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
 
@@ -130,7 +129,6 @@ void Stage::Update()
                 }
             }
         }
-    }
     
 }
 

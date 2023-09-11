@@ -15,8 +15,8 @@ namespace Direct3D
     ID3D11Texture2D* pDepthStencil = nullptr;			//深度ステンシル
     ID3D11DepthStencilView* pDepthStencilView = nullptr;		//深度ステンシルビュー
 
-    int scrWidth = 0;
-    int scrHeight = 0;
+    int scrWidth ;
+    int scrHeight ;
 
     struct SHADER_BUNDLE {
         ID3D11VertexShader* pVertexShader_ = nullptr;	//頂点シェーダー
