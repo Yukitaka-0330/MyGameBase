@@ -119,14 +119,17 @@ int Model::Load(std::string fileName)
 	pData->filename_ = fileName;
 	pData->pfbx_ = nullptr;
 
-	for (auto& e : modelList) {
-		if (e->filename_ == fileName) {
+	for (auto& e : modelList)
+	{
+		if (e->filename_ == fileName)
+		{
 			pData->pfbx_ = e->pfbx_;
 			break;
 		}
 	}
 
-	if (pData->pfbx_ == nullptr) {
+	if (pData->pfbx_ == nullptr)
+	{
 		pData->pfbx_ = new Fbx;
 		pData->pfbx_->Load(fileName);
 	}
@@ -153,12 +156,14 @@ void Model::Release()
 	{
 		for (int j = i + 1; j < modelList.size(); j++)
 		{
-			if (modelList[i]->pfbx_ == modelList[j]->pfbx_) {
+			if (modelList[i]->pfbx_ == modelList[j]->pfbx_)
+			{
 				IsReferred = true;
 				break;
 			}
 		}
-		if (IsReferred == false) {
+		if (IsReferred == false)
+		{
 			SAFE_DELETE(modelList[i]->pfbx_)
 		}
 		SAFE_DELETE(modelList[i]);
@@ -168,25 +173,31 @@ void Model::Release()
 
 void Model::RayCast(int hModel, RayCastData& rayData)
 {
-	//モデルのトランスフォームをカリキュレーション
+	//⓪モデルのトランスフォームをカリキュレーション
 	modelList[hModel]->transform_.Calclation();
-	//逆行列
+
+	//①ワールド行列の逆行列
 	XMMATRIX wInv = XMMatrixInverse(nullptr, modelList[hModel]->transform_.GetWorldMatrix());
-	//通過点
-	XMVECTOR vpass{ rayData.start.x + rayData.dir.x,
-					rayData.start.y + rayData.dir.y,
-					rayData.start.z + rayData.dir.z,
+
+	//②レイの通過点を求める(モデル空間でのレイの方向ベクトルを求める)
+	XMVECTOR vpass{ rayData.start.x + rayData.dir.x ,
+					rayData.start.y + rayData.dir.y ,
+					rayData.start.z + rayData.dir.z ,
 					rayData.start.w + rayData.dir.w };
-	//モデル空間に変換
+
+	//③rayData.startをモデル空間に変換(①を掛ける)
 	XMVECTOR vstart = XMLoadFloat4(&rayData.start);
-	vstart = XMVector3TransformCoord(vstart, wInv);
+	vstart = XMVector3TransformCoord(vstart, wInv); //transforncoordはw要素を無視してくれるらしい
 	XMStoreFloat4(&rayData.start, vstart);
-	//通過点に1をかける
+
+	//④(視点から方向ベクトルをちょい伸ばした先)通過点(②)に①を掛ける
 	vpass = XMVector3TransformCoord(vpass, wInv);
-	//３，４に向かうベクトルにする
+
+	//⑤raydata.dirを③から④に向かうベクトルにする(引数)
 	vpass = vpass - vstart;
 	XMStoreFloat4(&rayData.dir, vpass);
 
+	//指定したモデル番号のFBXにレイキャスト!
 	modelList[hModel]->pfbx_->RayCast(rayData);
 }
 

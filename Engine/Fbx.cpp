@@ -374,7 +374,8 @@ void Fbx::RayCast(RayCastData& rayData)
 #include "Texture.h"
 #include "DirectXCollision.h"
 
-Fbx::Fbx()//vertexCount_(0), polygonCount_(0),
+Fbx::Fbx() :pVertexBuffer_(nullptr),pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr),
+vertexCount_(NULL), polygonCount_(NULL), materialCount_(NULL), indexCount_(NULL)
 {
 }
 
@@ -607,19 +608,17 @@ void Fbx::Draw(Transform& transform)
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 
-		if (i == 1) {
+		if (i == 1)
+		{
 			cb.diffuseColor = XMFLOAT4(1, 1, 1, 1);
 			cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 		}
 
-		else {
+		else
+		{
 			cb.diffuseColor = pMaterialList_[i].diffuse;
 			cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 		}
-
-
-
-
 
 
 		D3D11_MAPPED_SUBRESOURCE pdata;
@@ -670,19 +669,37 @@ void Fbx::Release()
 
 void Fbx::RayCast(RayCastData& rayData)
 {
-	for (int material = 0; material < materialCount_; material++) {
-		for (int poly = 0; poly < indexCount_[material] / 3; poly++) {
+	for (int material = 0; material < materialCount_; material++) 
+	{
+		for (int poly = 0; poly < indexCount_[material] / 3; poly++) 
+		{
+			int i0 = ppIndex_[material][poly * 3 + 0];
+			int i1 = ppIndex_[material][poly * 3 + 1];
+			int i2 = ppIndex_[material][poly * 3 + 2];
 
-			XMVECTOR v0 = pVertices_[ppIndex_[material][poly * 3 + 0]].position;
-			XMVECTOR v1 = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
-			XMVECTOR v2 = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
+			XMVECTOR v0 = pVertices_[i0].position;
+			XMVECTOR v1 = pVertices_[i1].position;
+			XMVECTOR v2 = pVertices_[i2].position;
 
 			XMVECTOR start = XMLoadFloat4(&rayData.start);
+			XMVECTOR startN = XMVector4Normalize(start);
 			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
 			XMVECTOR dirN = XMVector4Normalize(dir);
+
+			/*XMVECTOR v0 = pVertices_[ppIndex_[material][poly * 3 + 0]].position;
+			XMVECTOR v1 = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
+			XMVECTOR v2 = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
+			XMVECTOR start = XMLoadFloat4(&rayData.start);
+			XMVECTOR startN = XMVector4Normalize(start);
+			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
+			XMVECTOR dirN = XMVector4Normalize(dir);*/
+			float fdist = 0.0f;
+
 			rayData.hit = TriangleTests::Intersects(start, dirN, v0, v1, v2, rayData.dist);
 
-			if (rayData.hit) {
+			if (rayData.hit && fdist < rayData.dist)
+			{
+				rayData.dist = fdist;
 				return;
 			}
 		}

@@ -150,13 +150,10 @@ namespace Input
 #include "Input.h"
 #include <string>
 
-
-
-
 namespace Input
 {
 	LPDIRECTINPUT8   pDInput = nullptr;
-	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
+	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr; //キーボードのを動かすための変数。
 	DIMOUSESTATE mouseState;
 	DIMOUSESTATE prevMouseState;
 	BYTE keyState[256];
@@ -182,7 +179,6 @@ namespace Input
 	void Update()
 	{
 		memcpy(prevKeyState, keyState, sizeof(BYTE) * 256);
-
 
 		pKeyDevice->Acquire();
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);

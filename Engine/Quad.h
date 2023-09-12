@@ -139,6 +139,7 @@ protected:
 	ID3D11Buffer* pIndexBuffer_;	//インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 	Texture* pTexture_;
+
 public:
 	Quad();
 	~Quad();

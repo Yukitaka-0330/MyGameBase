@@ -85,7 +85,7 @@ class Stage : public GameObject
 
 
     struct BLOCKHEIGHT {
-        BLOCKTYPE blocks;
+        int blocks;
         int height;
 
     } table_[XSIZE][ZSIZE];

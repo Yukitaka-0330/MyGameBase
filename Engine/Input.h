@@ -43,7 +43,9 @@ namespace Input
 #pragma comment(lib, "dInput8.lib")
 
 #define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;}
+
 using namespace DirectX;
+
 namespace Input
 {
 	void Initialize(HWND hWnd);

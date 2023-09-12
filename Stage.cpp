@@ -207,20 +207,17 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 #include "Engine/Camera.h"
 #include "resource.h"
 #include "Engine/Direct3D.h"
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
 {
-    for (int i = 0; i < MODEL_NUM; i++) {
+    for (int i = 0; i < MODEL_NUM; i++)
         hModel_[i] = -1;
-    }
-    for (int x = 0; x < XSIZE; x++) {
-        for (int z = 0; z < ZSIZE; z++) {
-            /* table_[i][f];
-             table_[i][f].height = 1;*/
+
+    for (int x = 0; x < XSIZE; x++)
+        for (int z = 0; z < ZSIZE; z++)
             SetBlockHeight(x, z, 0);
-        }
-    }
 }
 
 //デストラクタ
@@ -231,7 +228,8 @@ Stage::~Stage()
 //初期化
 void Stage::Initialize()
 {
-    string modelname[] = {
+    string modelname[] =
+    {
         "BoxDefault.fbx",
         "BoxBrick.fbx",
         "BoxGrass.fbx",
@@ -240,12 +238,15 @@ void Stage::Initialize()
     };
     string  fname_base = "Assets/";
     //モデルデータのロード
-    for (int i = 0; i < MODEL_NUM; i++) {
+    for (int i = 0; i < MODEL_NUM; i++)
+    {
         hModel_[i] = Model::Load(fname_base + modelname[i]);
         assert(hModel_[i] >= 0);
     }
-    for (int z = 0; z < ZSIZE; z++) {
-        for (int x = 0; x < XSIZE; x++) {
+    for (int z = 0; z < ZSIZE; z++)
+    {
+        for (int x = 0; x < XSIZE; x++)
+        {
             SetBlock(x, z, DEFAULT);
         }
     }
@@ -255,9 +256,9 @@ void Stage::Initialize()
 void Stage::Update()
 {
 
-    if (!Input::IsMouseButtonDown(0)) {
+    if (!Input::IsMouseButtonDown(0))
         return;
-    }
+    
     float w = (float)(Direct3D::scrWidth / 2.0f);
     float h = (float)(Direct3D::scrHeight / 2.0f);
 
@@ -285,9 +286,12 @@ void Stage::Update()
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
 
-    for (int x = 0; x < 15; x++) {
-        for (int z = 0; z < 15; z++) {
-            for (int y = 0; y < table_[x][z].height + 1; y++) {
+    for (int x = 0; x < 15; x++)
+    {
+        for (int z = 0; z < 15; z++) 
+        {
+            for (int y = 0; y < table_[x][z].height + 1; y++)
+            {
                 RayCastData data{};
                 XMStoreFloat4(&data.start, vMouseFront);
                 XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
@@ -299,8 +303,52 @@ void Stage::Update()
 
                 Model::RayCast(hModel_[0], data);
 
-                if (data.hit) {
-                   table_[x][z].height++;
+                if (data.hit)
+                {
+                    switch (mode_)
+                    {
+                    case 0: //RADIO_UP
+                        table_[x][z].height++;
+                        break;
+
+                    case 1://RADIO_DOWN
+                        if (!(table_[x][z].height < 1))
+                        table_[x][z].height--;
+                        break;
+
+                    case 2://RADIO_CHANGE
+                       // SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(WATER));
+                       //table_[x][z].blocks = select_;
+
+                        switch (select_)
+                        {
+                        case 0:
+                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(DEFAULT));
+                            table_[x][z].blocks = select_;
+                            break;
+                        case 1:
+                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(BRICK));
+                            table_[x][z].blocks = select_;
+                            break;
+                        case 2:
+                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(GRASS));
+                            table_[x][z].blocks = select_;
+                            break;
+                        case 3:
+                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(SAND));
+                            table_[x][z].blocks = select_;
+                            break;
+                        case 4:
+                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(WATER));
+                            table_[x][z].blocks = select_;
+                            break;
+                        }
+
+                        break;
+
+                    }
+                  
+                   
                     break;
                 }
 
@@ -324,11 +372,12 @@ void Stage::Draw()
         {
 
 
-            for (int y = 0; y < table_[x][z].height + 1; y++) {
+            for (int y = 0; y < table_[x][z].height + 1; y++) 
+            {
 
                 BlockTrans.position_.x = x;
                 BlockTrans.position_.z = z;
-                BlockTrans.position_ = { (float)x,(float)y,(float)z };
+                BlockTrans.position_.y = y;
                 Model::SetTransform(table_[x][z].blocks, BlockTrans);
                 Model::Draw(table_[x][z].blocks);
 
@@ -363,15 +412,32 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         //radio
         SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK, BST_CHECKED, 0);
 
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"default");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Brick");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"Grass");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"sand");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"water");
+        (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"デフォルト"));
+        (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"レンガ"));
+        (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"草"));
+        (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"砂"));
+        (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"水"));
+        
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
         return TRUE;
 
+    case WM_COMMAND:
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0,0);
 
+        if (IsDlgButtonChecked(hDlg, IDC_RADIO_UP))
+        {
+            mode_ = 0;
+        }
+
+        if (IsDlgButtonChecked(hDlg, IDC_RADIO_DOWN))
+        {
+            mode_ = 1;
+        }
+
+        if (IsDlgButtonChecked(hDlg, IDC_RADIO_CHANGE))
+        {
+            mode_ = 2;
+        }
     }
     return FALSE;
 }

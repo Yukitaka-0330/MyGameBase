@@ -99,7 +99,7 @@ public:
 #pragma comment(lib, "zlib-MD.lib")
 
 
-class Texture;
+class Texture; //‘O•ûéŒ¾
 struct RayCastData
 {
 	XMFLOAT4 start;
