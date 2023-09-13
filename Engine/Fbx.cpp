@@ -697,9 +697,9 @@ void Fbx::RayCast(RayCastData& rayData)
 
 			rayData.hit = TriangleTests::Intersects(start, dirN, v0, v1, v2, rayData.dist);
 
-			if (rayData.hit && fdist < rayData.dist)
+			if (rayData.hit)
 			{
-				rayData.dist = fdist;
+				//rayData.dist = fdist;
 				return;
 			}
 		}
