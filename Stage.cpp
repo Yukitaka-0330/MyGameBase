@@ -313,42 +313,13 @@ void Stage::Update()
 
                     case 1://RADIO_DOWN
                         if (!(table_[x][z].height < 1))
-                        table_[x][z].height--;
+                            table_[x][z].height--;
                         break;
 
                     case 2://RADIO_CHANGE
-                       // SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(WATER));
-                       //table_[x][z].blocks = select_;
-
-                        switch (select_)
-                        {
-                        case 0:
-                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(DEFAULT));
-                            table_[x][z].blocks = select_;
-                            break;
-                        case 1:
-                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(BRICK));
-                            table_[x][z].blocks = select_;
-                            break;
-                        case 2:
-                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(GRASS));
-                            table_[x][z].blocks = select_;
-                            break;
-                        case 3:
-                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(SAND));
-                            table_[x][z].blocks = select_;
-                            break;
-                        case 4:
-                            SetBlock(table_[x]->blocks, table_[z]->blocks, BLOCKTYPE(WATER));
-                            table_[x][z].blocks = select_;
-                            break;
-                        }
-
+                        SetBlock(x, z, (BLOCKTYPE)select_ );
                         break;
-
                     }
-                  
-                   
                     break;
                 }
 
@@ -363,15 +334,10 @@ void Stage::Draw()
 {
     Transform BlockTrans;//TransformŒ^‚Ì•Ï”
     //TransformŒ^ -> ˆÊ’u,Œü‚«,‘å‚«‚³‚ðˆµ‚¤Œ^
-
-
-
     for (int x = 0; x < XSIZE; x++)
     {
         for (int z = 0; z < ZSIZE; z++)
         {
-
-
             for (int y = 0; y < table_[x][z].height + 1; y++) 
             {
 
@@ -417,12 +383,12 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"‘"));
         (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"»"));
         (SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_ADDSTRING, 0, (LPARAM)"…"));
-        
+
         SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_SETCURSEL, 0, 0);
         return TRUE;
 
     case WM_COMMAND:
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0,0);
+        select_=SendMessage(GetDlgItem(hDlg, IDC_COMBO2), CB_GETCURSEL, 0,0);
 
         if (IsDlgButtonChecked(hDlg, IDC_RADIO_UP))
         {
