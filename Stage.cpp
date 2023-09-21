@@ -305,8 +305,15 @@ void Stage::Update()
 
                 if (data.hit)
                 {
-                    switch (mode_)
-                    {
+                   
+                    break;
+                }
+
+            }
+        }
+    }
+    switch (mode_)
+                   {
                     case 0: //RADIO_UP
                         table_[x][z].height++;
                         break;
@@ -320,13 +327,6 @@ void Stage::Update()
                         SetBlock(x, z, (BLOCKTYPE)select_ );
                         break;
                     }
-                    break;
-                }
-
-            }
-        }
-    }
-
 }
 
 //•`‰æ
