@@ -328,7 +328,7 @@ void Stage::Update()
     switch (mode_)
     {
       case 0: //RADIO_UP
-          table_[posX][posZ -1 ].height++;
+          table_[posX][posZ].height++;
          break;
 
      case 1://RADIO_DOWN
