@@ -218,6 +218,8 @@ Stage::Stage(GameObject* parent)
     for (int x = 0; x < XSIZE; x++)
         for (int z = 0; z < ZSIZE; z++)
             SetBlockHeight(x, z, 0);
+
+    
 }
 
 //デストラクタ
@@ -262,6 +264,10 @@ void Stage::Update()
     float w = (float)(Direct3D::scrWidth / 2.0f);
     float h = (float)(Direct3D::scrHeight / 2.0f);
 
+    float distance = FLT_MAX;
+    int posX = -1;
+    int posZ = -1;
+
     XMMATRIX vp =
     {
         w, 0, 0, 0,
@@ -305,6 +311,12 @@ void Stage::Update()
 
                 if (data.hit)
                 {
+                    if (distance > data.dist)
+                    {
+                        distance = data.dist;
+                        posX = x ;
+                        posZ = z ;
+                    }
                    
                     break;
                 }
@@ -312,21 +324,22 @@ void Stage::Update()
             }
         }
     }
+
     switch (mode_)
-                   {
-                    case 0: //RADIO_UP
-                        table_[x][z].height++;
-                        break;
+    {
+      case 0: //RADIO_UP
+          table_[posX][posZ -1 ].height++;
+         break;
 
-                    case 1://RADIO_DOWN
-                        if (!(table_[x][z].height < 1))
-                            table_[x][z].height--;
-                        break;
+     case 1://RADIO_DOWN
+         if (!(table_[posX][posZ].height < 1))
+             table_[posX][posZ].height--;
+         break;
 
-                    case 2://RADIO_CHANGE
-                        SetBlock(x, z, (BLOCKTYPE)select_ );
-                        break;
-                    }
+     case 2://RADIO_CHANGE
+         SetBlock(posX, posZ, (BLOCKTYPE)select_);
+         break;
+    }
 }
 
 //描画
