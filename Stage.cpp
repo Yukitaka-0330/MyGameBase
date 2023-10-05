@@ -340,6 +340,7 @@ void Stage::Update()
          SetBlock(posX, posZ, (BLOCKTYPE)select_);
          break;
     }
+
 }
 
 //•`‰æ
@@ -418,20 +419,6 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             mode_ = 2;
         } 
     }
-    return FALSE;
-}
-
-BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
-{
-    switch (msg)
-    {
-    case WM_COMMAND:
-        SendMessage(GetDlgItem(hDlg, ID_MENU_NEW), BM_SETCHECK, BST_CHECKED, 0);
-        SendMessage(GetDlgItem(hDlg, ID_MENU_OPEN), BM_SETCHECK, BST_CHECKED, 0);
-        SendMessage(GetDlgItem(hDlg, ID_MENU_SAVE), BM_SETCHECK, BST_CHECKED, 0);
-        return TRUE;
-    }
-
     return FALSE;
 }
 

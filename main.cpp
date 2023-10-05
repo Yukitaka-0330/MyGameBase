@@ -192,7 +192,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
+
+	case ID_MENU_NEW:
+		HANDLE hFile;        //ファイルのハンドル
+		hFile = CreateFile(
+			●●●,                 //ファイル名
+			●●●●●●,           //アクセスモード（書き込み用）
+			0,                      //共有（なし）
+			NULL,                   //セキュリティ属性（継承しない）
+			●●●●●●,           //作成方法
+			FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+			NULL);                  //拡張属性（なし）
+		return 0;
 	}
+
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
