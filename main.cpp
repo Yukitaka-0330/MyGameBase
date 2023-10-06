@@ -200,53 +200,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
-		
-	case WM_COMMAND:
-		switch (msg)
-		{
-		case ID_MENU_NEW:
-			OutputDebugString("New File");
-			return 0;
 
-		case ID_MENU_OPEN:
-			OutputDebugString("Open File");
-			return 0;
+	case ID_MENU_NEW:
+		OutputDebugString("New File");
+		return 0;
 
-		case ID_MENU_SAVE:
-			OutputDebugString("Save File");
+	case ID_MENU_OPEN:
+		OutputDebugString("Open File");
+		return 0;
 
-			HANDLE hFile;        //ファイルのハンドル
-			hFile = CreateFile(
-				"Save.txt",                 //ファイル名
-				GENERIC_WRITE,           //アクセスモード（書き込み用）
-				0,                      //共有（なし）
-				NULL,                   //セキュリティ属性（継承しない）
-				CREATE_ALWAYS,           //作成方法
-				FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-				NULL);                  //拡張属性（なし）
-
-			string SaveStr = to_string(WINDOW_WIDTH) + "\n" + to_string(WINDOW_HEIGHT) + "\n";
-			DWORD dwBytes = 0;  //書き込み位置
-			BOOL res = WriteFile(
-				hFile,                   //ファイルハンドル
-				SaveStr.c_str(),                  //保存するデータ（文字列）
-				(DWORD)strlen(SaveStr.c_str()),   //書き込む文字数
-				&dwBytes,                //書き込んだサイズを入れる変数
-				NULL);                   //オーバーラップド構造体（今回は使わない）
-
-			if (res == FALSE)
-			{
-				std::cout << "ファイルの書き込みに失敗" << GetLastError() << endl;
-				return -1;
-			}
-			return 0;
-
-			CloseHandle(hFile);
-		}
-
-	
+	case ID_MENU_SAVE:
+		OutputDebugString("Save File");
+		return 0;
 	}
-
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
