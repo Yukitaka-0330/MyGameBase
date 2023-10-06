@@ -228,7 +228,7 @@ namespace Input
 		mousePosition.x = x;
 		mousePosition.y = y;
 		std::string resStr = std::to_string(x) + "," + std::to_string(y) + "\n";
-		OutputDebugString(resStr.c_str());
+		//OutputDebugString(resStr.c_str());
 	}
 
 	XMFLOAT3 GetMouseMove()

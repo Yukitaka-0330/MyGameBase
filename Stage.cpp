@@ -383,6 +383,11 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
     table_[_x][_z].height = _height;
 }
 
+void Stage::Save()
+{
+    char fileName[MAX_PATH] = "None.map";
+}
+
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {

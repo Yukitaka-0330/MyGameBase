@@ -116,6 +116,8 @@ public:
     void SetBlockHeight(int _x, int _z, int _height);
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
+
+    void Save();
 };
 
 #endif
