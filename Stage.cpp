@@ -429,7 +429,7 @@ void Stage::Save()
 
     //•Û‘¶“à—e->‚‚³‚Æí—Ş
     Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE) + "\n" + Heightdata + "\n" + Typedata;
-    //data.length();
+
 
     DWORD bytes = 0;
     WriteFile(
