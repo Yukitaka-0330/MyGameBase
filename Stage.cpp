@@ -418,6 +418,7 @@ void Stage::Save()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
+
     for (int z = 0; z < ZSIZE; z++)
         for (int x = 0; x < XSIZE; x++)
         {
@@ -427,7 +428,7 @@ void Stage::Save()
         }
 
     //保存内容->高さと種類
-    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE) + "\n" + Heightdata + "\n";
+    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE) + "\n" + Heightdata + "\n" + Typedata;
     //data.length();
 
     DWORD bytes = 0;
