@@ -418,16 +418,16 @@ void Stage::Save()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-    //保存内容->高さと種類
-    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE)+"\n" + std::to_string(Heightdata);
-
     for (int z = 0; z < ZSIZE; z++)
         for (int x = 0; x < XSIZE; x++)
         {
             // ブロックの高さと種類を文字列に変換して連結
-            std::string Heightdata = std::to_string(table_[x][z].height);
-            std::string Typedata = std::to_string(table_[x][z].blocks);
+            Heightdata += std::to_string(table_[x][z].height);
+            Typedata += std::to_string(table_[x][z].blocks);
         }
+
+    //保存内容->高さと種類
+    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE) + "\n" + Heightdata + "\n";
     //data.length();
 
     DWORD bytes = 0;
