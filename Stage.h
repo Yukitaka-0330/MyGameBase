@@ -64,6 +64,8 @@ public:
 #pragma once
 #include "Engine/GameObject.h"
 #include "Windows.h"
+#include <sstream>
+
 namespace {
     const int MODEL_NUM{ 5 };
     const int XSIZE{ 15 };
@@ -91,6 +93,8 @@ class Stage : public GameObject
     } table_[XSIZE][ZSIZE];
     int mode_;
     int select_;
+
+    std::string Stagedata;
 
 
 public:

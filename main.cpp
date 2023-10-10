@@ -201,17 +201,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 
-	case ID_MENU_NEW:
-		OutputDebugString("New File");
-		return 0;
+	case WM_COMMAND:
+		switch ((wParam))
+		{
+		case ID_MENU_NEW:
+			OutputDebugString("New File");
+			break;
 
-	case ID_MENU_OPEN:
-		OutputDebugString("Open File");
-		return 0;
+		case ID_MENU_OPEN:
+			OutputDebugString("Open File");
+			break;
 
-	case ID_MENU_SAVE:
-		OutputDebugString("Save File");
-		return 0;
+		case ID_MENU_SAVE:
+			OutputDebugString("Save File");
+			((Stage*)pRootJob->FindObject("Stage"))->Save();
+			//ファイル保存ダイアログで名前を決める
+			//決めたファイル名でセーブを実行
+			return 0;
+		}
+	
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

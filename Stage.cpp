@@ -208,6 +208,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 #include "resource.h"
 #include "Engine/Direct3D.h"
 
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
     :GameObject(parent, "Stage")
@@ -385,7 +386,59 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
 
 void Stage::Save()
 {
-    char fileName[MAX_PATH] = "None.map";
+    char fileName[MAX_PATH] = "SaveData.map";
+
+    //「ファイルを保存」　ダイアログの設定
+    OPENFILENAME ofn;
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
+        TEXT("すべてのファイル(*.*)\0*.*\0\0");
+    ofn.lpstrFile = fileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_OVERWRITEPROMPT;
+    ofn.lpstrDefExt = "map";
+
+    //「ファイルを保存」ダイアログ
+    BOOL selFile;
+    selFile = GetSaveFileName(&ofn);
+
+    //キャンセルしたら中断
+    if (selFile == FALSE) return;
+
+
+    //セーブのルーチン
+    HANDLE hFile;        //ファイルのハンドル
+    hFile = CreateFile(
+        fileName,                 //ファイル名
+        GENERIC_WRITE,           //アクセスモード（書き込み用）
+        0,                      //共有（なし）
+        NULL,                   //セキュリティ属性（継承しない）
+        CREATE_ALWAYS,           //作成方法
+        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+        NULL);                  //拡張属性（なし）
+
+    //保存内容->高さと種類
+    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE)+"\n" + std::to_string(Heightdata);
+
+    for (int z = 0; z < ZSIZE; z++)
+        for (int x = 0; x < XSIZE; x++)
+        {
+            // ブロックの高さと種類を文字列に変換して連結
+            std::string Heightdata = std::to_string(table_[x][z].height);
+            std::string Typedata = std::to_string(table_[x][z].blocks);
+        }
+    //data.length();
+
+    DWORD bytes = 0;
+    WriteFile(
+        hFile,      //ファイルハンドル
+        Stagedata.c_str(),  //保存したい文字列
+        (DWORD)strlen(Stagedata.c_str()),         //保存する文字列
+        &bytes,     //保存したいサイズ
+        NULL
+    );
+    CloseHandle(hFile);
 }
 
 
