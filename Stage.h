@@ -123,6 +123,7 @@ public:
     BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 
     void Save();
+    void Road();
 };
 
 #endif
