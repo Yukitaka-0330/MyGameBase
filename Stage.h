@@ -94,9 +94,6 @@ class Stage : public GameObject
     int mode_;
     int select_;
 
-    std::string Stagedata;
-    std::string Heightdata;
-    std::string Typedata;
 
 public:
     //コンストラクタ

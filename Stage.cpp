@@ -419,18 +419,26 @@ void Stage::Save()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
+    std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
 
     for (int z = 0; z < ZSIZE; z++)
+    {
         for (int x = 0; x < XSIZE; x++)
         {
-            // ブロックの高さと種類を文字列に変換して連結
-            Heightdata += std::to_string(table_[x][z].height) + ",";
-            Typedata += std::to_string(table_[x][z].blocks) + ",";
+            // ブロックの高さと種類を文字列に変換してコンマで区切って連結
+            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].blocks);
+
+            if (x < XSIZE - 1)
+            {
+                Stagedata += ","; // XSIZE - 1 のときはコンマを追加
+            }
         }
 
-    //保存内容->高さと種類
-    Stagedata = std::to_string(XSIZE) + std::to_string(ZSIZE) + "\n" + Heightdata + "\n" + Typedata;
-
+        if (z < ZSIZE - 1)
+        {
+            Stagedata += "\n"; // ZSIZE - 1 のときは改行文字を追加
+        }
+    }
 
     DWORD bytes = 0;
     WriteFile(
