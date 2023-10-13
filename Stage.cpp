@@ -208,6 +208,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 #include "resource.h"
 #include "Engine/Direct3D.h"
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 
 //コンストラクタ
@@ -419,7 +421,8 @@ void Stage::Save()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-    std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+    //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+    std::string Stagedata;
 
     for (int z = 0; z < ZSIZE; z++)
     {
@@ -428,16 +431,14 @@ void Stage::Save()
             // ブロックの高さと種類を文字列に変換してコンマで区切って連結
             Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].blocks);
 
+            // XSIZE - 1 のときはコンマを追加
             if (x < XSIZE - 1)
-            {
-                Stagedata += ","; // XSIZE - 1 のときはコンマを追加
-            }
+                Stagedata += ",";
         }
 
+        // ZSIZE - 1 のときは改行文字を追加
         if (z < ZSIZE - 1)
-        {
-            Stagedata += "\n"; // ZSIZE - 1 のときは改行文字を追加
-        }
+            Stagedata += "\n";
     }
 
     DWORD bytes = 0;
@@ -452,7 +453,7 @@ void Stage::Save()
 
 }
 
-void Stage::Road()
+void Stage::Load()
 {
     char fileName[MAX_PATH] = "SaveData.map";
 
@@ -501,16 +502,19 @@ void Stage::Road()
         fileSize,  //読み込むサイズ
         &dwBytes,  //読み込んだサイズ
         NULL);     //オーバーラップド構造体（今回は使わない）
-
     CloseHandle(hFile);
 
+    int* iArray = new int[fileSize];
+
+    //データを整数に変換して読み込み
+    char* value = strtok(data, ","); //コンマ区切りになってるから
+    int index = 0;
+
     for (int x = 0; x < XSIZE; x++)
-        for (int x = 0; x < ZSIZE; x++)
+        for (int z = 0; z < ZSIZE; z++)
         {
-
+            iArray[index] = atoi(value);
         }
-
-
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
