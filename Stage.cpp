@@ -207,6 +207,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 #include "Engine/Camera.h"
 #include "resource.h"
 #include "Engine/Direct3D.h"
+#include <iostream>
 
 
 //コンストラクタ
@@ -423,8 +424,8 @@ void Stage::Save()
         for (int x = 0; x < XSIZE; x++)
         {
             // ブロックの高さと種類を文字列に変換して連結
-            Heightdata += std::to_string(table_[x][z].height);
-            Typedata += std::to_string(table_[x][z].blocks);
+            Heightdata += std::to_string(table_[x][z].height) + ",";
+            Typedata += std::to_string(table_[x][z].blocks) + ",";
         }
 
     //保存内容->高さと種類
@@ -440,6 +441,7 @@ void Stage::Save()
         NULL
     );
     CloseHandle(hFile);
+
 }
 
 void Stage::Road()
@@ -493,6 +495,14 @@ void Stage::Road()
         NULL);     //オーバーラップド構造体（今回は使わない）
 
     CloseHandle(hFile);
+
+    for (int x = 0; x < XSIZE; x++)
+        for (int x = 0; x < ZSIZE; x++)
+        {
+
+        }
+
+
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
