@@ -506,15 +506,15 @@ void Stage::Load()
 
     int* iArray = new int[fileSize];
 
-    //データを整数に変換して読み込み
-    char* value = strtok(data, ","); //コンマ区切りになってるから
-    int index = 0;
+    ////データを整数に変換して読み込み
+    //char* value = strtok(data, ","); //コンマ区切りになってるから
+    //int index = 0;
 
-    for (int x = 0; x < XSIZE; x++)
-        for (int z = 0; z < ZSIZE; z++)
-        {
-            iArray[index] = atoi(value);
-        }
+    //for (int x = 0; x < XSIZE; x++)
+    //    for (int z = 0; z < ZSIZE; z++)
+    //    {
+    //        iArray[index] = atoi(value);
+    //    }
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
