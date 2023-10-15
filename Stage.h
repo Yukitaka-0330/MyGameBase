@@ -72,7 +72,7 @@ namespace {
     const int ZSIZE{ 15 };
     enum BLOCKTYPE
     {
-        DEFAULT, BRICK, GRASS, SAND, WATER
+        DEFAULT, BRICK, GRASS, SAND, WATER,MAX
     };
 
 }
@@ -117,7 +117,7 @@ public:
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeight(int _x, int _z, int _height);
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
-    BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
+    //BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 
     void Save();
     void Load();

@@ -387,134 +387,195 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
     table_[_x][_z].height = _height;
 }
 
+//void Stage::Save()
+//{
+//    char fileName[MAX_PATH] = "SaveData.map";
+//
+//    「ファイルを保存」　ダイアログの設定
+//    OPENFILENAME ofn;
+//    ZeroMemory(&ofn, sizeof(ofn));
+//    ofn.lStructSize = sizeof(OPENFILENAME);
+//    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
+//        TEXT("すべてのファイル(*.*)\0*.*\0\0");
+//    ofn.lpstrFile = fileName;
+//    ofn.nMaxFile = MAX_PATH;
+//    ofn.Flags = OFN_OVERWRITEPROMPT;
+//    ofn.lpstrDefExt = "map";
+//
+//    「ファイルを保存」ダイアログ
+//    BOOL selFile;
+//    selFile = GetSaveFileName(&ofn);
+//
+//    キャンセルしたら中断
+//    if (selFile == FALSE) return;
+//
+//
+//    セーブのルーチン
+//    HANDLE hFile;        //ファイルのハンドル
+//    hFile = CreateFile(
+//        fileName,                 //ファイル名
+//        GENERIC_WRITE,           //アクセスモード（書き込み用）
+//        0,                      //共有（なし）
+//        NULL,                   //セキュリティ属性（継承しない）
+//        CREATE_ALWAYS,           //作成方法
+//        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+//        NULL);                  //拡張属性（なし）
+//
+//    std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+//    std::string Stagedata;
+//
+//    for (int z = 0; z < ZSIZE; z++)
+//    {
+//        for (int x = 0; x < XSIZE; x++)
+//        {
+//             ブロックの高さと種類を文字列に変換してコンマで区切って連結
+//            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].blocks);
+//
+//             XSIZE - 1 のときはコンマを追加
+//            if (x < XSIZE - 1)
+//                Stagedata += ",";
+//        }
+//
+//         ZSIZE - 1 のときは改行文字を追加
+//        if (z < ZSIZE - 1)
+//            Stagedata += "\n";
+//    }
+//
+//    DWORD bytes = 0;
+//    WriteFile(
+//        hFile,      //ファイルハンドル
+//        Stagedata.c_str(),  //保存したい文字列
+//        (DWORD)strlen(Stagedata.c_str()),         //保存する文字列
+//        &bytes,     //保存したいサイズ
+//        NULL
+//    );
+//    CloseHandle(hFile);
+//
+//}
+//
+//void Stage::Load()
+//{
+//    char fileName[MAX_PATH] = "SaveData.map";
+//
+//    「ファイルを開く」　ダイアログの設定
+//    OPENFILENAME ofn;
+//    ZeroMemory(&ofn, sizeof(ofn));
+//    ofn.lStructSize = sizeof(OPENFILENAME);
+//    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
+//        TEXT("すべてのファイル(*.*)\0*.*\0\0");
+//    ofn.lpstrFile = fileName;
+//    ofn.nMaxFile = MAX_PATH;
+//    ofn.Flags = OFN_FILEMUSTEXIST;
+//    ofn.lpstrDefExt = "map";
+//
+//    「ファイルを開く」ダイアログ
+//    BOOL selFile;
+//    selFile = GetOpenFileName(&ofn);
+//
+//    キャンセルしたら中断
+//    if (selFile == FALSE) return;
+//
+//
+//    HANDLE hFile;        //ファイルのハンドル
+//    hFile = CreateFile(
+//        fileName,                 //ファイル名
+//        GENERIC_READ,           //アクセスモード（読み込み専用）
+//        0,                      //共有（なし）
+//        NULL,                   //セキュリティ属性（継承しない）
+//        OPEN_EXISTING,           //作成方法
+//        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+//        NULL);                  //拡張属性（なし）
+//
+//
+//    ファイルのサイズを取得
+//    DWORD fileSize = GetFileSize(hFile, NULL);
+//
+//    ファイルのサイズ分メモリを確保
+//    char* data;
+//    data = new char[fileSize];
+//
+//    DWORD dwBytes = 0; //読み込み位置
+//
+//    ReadFile(
+//        hFile,     //ファイルハンドル
+//        data,      //データを入れる変数
+//        fileSize,  //読み込むサイズ
+//        &dwBytes,  //読み込んだサイズ
+//        NULL);     //オーバーラップド構造体（今回は使わない）
+//    CloseHandle(hFile);
+//
+//    int* iArray = new int[fileSize];
+//
+//    //データを整数に変換して読み込み
+//    char* value = strtok(data, ","); //コンマ区切りになってるから
+//    int index = 0;
+//
+//    for (int x = 0; x < XSIZE; x++)
+//        for (int z = 0; z < ZSIZE; z++)
+//        {
+//            iArray[index] = atoi(value);
+//        }
+//}
+
 void Stage::Save()
 {
-    char fileName[MAX_PATH] = "SaveData.map";
-
-    //「ファイルを保存」　ダイアログの設定
-    OPENFILENAME ofn;
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
-        TEXT("すべてのファイル(*.*)\0*.*\0\0");
-    ofn.lpstrFile = fileName;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_OVERWRITEPROMPT;
-    ofn.lpstrDefExt = "map";
-
-    //「ファイルを保存」ダイアログ
-    BOOL selFile;
-    selFile = GetSaveFileName(&ofn);
-
-    //キャンセルしたら中断
-    if (selFile == FALSE) return;
+    char fileName[MAX_PATH] = "無題.map";
+    std::string buffer;
+    std::stringstream oss;
 
 
-    //セーブのルーチン
-    HANDLE hFile;        //ファイルのハンドル
-    hFile = CreateFile(
-        fileName,                 //ファイル名
-        GENERIC_WRITE,           //アクセスモード（書き込み用）
-        0,                      //共有（なし）
-        NULL,                   //セキュリティ属性（継承しない）
-        CREATE_ALWAYS,           //作成方法
-        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-        NULL);                  //拡張属性（なし）
-
-    //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
-    std::string Stagedata;
-
-    for (int z = 0; z < ZSIZE; z++)
-    {
-        for (int x = 0; x < XSIZE; x++)
-        {
-            // ブロックの高さと種類を文字列に変換してコンマで区切って連結
-            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].blocks);
-
-            // XSIZE - 1 のときはコンマを追加
-            if (x < XSIZE - 1)
-                Stagedata += ",";
-        }
-
-        // ZSIZE - 1 のときは改行文字を追加
-        if (z < ZSIZE - 1)
-            Stagedata += "\n";
+    //OPENFILENAME構造体を初期化
+    OPENFILENAME ofn; {
+        ZeroMemory(&ofn, sizeof(ofn));
+        ofn.lStructSize = sizeof(OPENFILENAME);
+        ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0");
+        ofn.lpstrFile = fileName;
+        ofn.nMaxFile = MAX_PATH;
+        ofn.Flags = OFN_OVERWRITEPROMPT;
+        ofn.lpstrDefExt = TEXT("map");
     }
 
-    DWORD bytes = 0;
-    WriteFile(
-        hFile,      //ファイルハンドル
-        Stagedata.c_str(),  //保存したい文字列
-        (DWORD)strlen(Stagedata.c_str()),         //保存する文字列
-        &bytes,     //保存したいサイズ
-        NULL
-    );
-    CloseHandle(hFile);
-
+    //ファイルに保存
+    if (GetSaveFileName(&ofn)) {
+        std::fstream outputFile(fileName, std::ios::binary | std::ios::out);
+        for (int x = 0; x < XSIZE; x++) {
+            for (int z = 0; z < ZSIZE; z++) {
+                outputFile.write((char*)&table_[x][z], sizeof(BLOCKHEIGHT));
+            }
+        }
+        outputFile.close();
+    }
 }
 
 void Stage::Load()
 {
-    char fileName[MAX_PATH] = "SaveData.map";
+    char fileName[MAX_PATH] = "無題.map";
+    std::string buffer;
+    std::stringstream oss;
 
-    //「ファイルを開く」　ダイアログの設定
-    OPENFILENAME ofn;
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
-        TEXT("すべてのファイル(*.*)\0*.*\0\0");
-    ofn.lpstrFile = fileName;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_FILEMUSTEXIST;
-    ofn.lpstrDefExt = "map";
+    //OPENFILENAME構造体を初期化
+    OPENFILENAME ofn; {
+        ZeroMemory(&ofn, sizeof(ofn));
+        ofn.lStructSize = sizeof(OPENFILENAME);
+        ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0");
+        ofn.lpstrFile = fileName;
+        ofn.nMaxFile = MAX_PATH;
+        ofn.Flags = OFN_FILEMUSTEXIST;
+        ofn.lpstrDefExt = TEXT("map");
+        ofn.lpstrDefExt;
+    }
 
-    //「ファイルを開く」ダイアログ
-    BOOL selFile;
-    selFile = GetOpenFileName(&ofn);
+    //ファイルを開く
+    if (GetOpenFileName(&ofn)) {
+        std::fstream inputFile(fileName, std::ios::binary | std::ios::in);
 
-    //キャンセルしたら中断
-    if (selFile == FALSE) return;
-
-
-    HANDLE hFile;        //ファイルのハンドル
-    hFile = CreateFile(
-        fileName,                 //ファイル名
-        GENERIC_READ,           //アクセスモード（読み込み専用）
-        0,                      //共有（なし）
-        NULL,                   //セキュリティ属性（継承しない）
-        OPEN_EXISTING,           //作成方法
-        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
-        NULL);                  //拡張属性（なし）
-
-
-    //ファイルのサイズを取得
-    DWORD fileSize = GetFileSize(hFile, NULL);
-
-    //ファイルのサイズ分メモリを確保
-    char* data;
-    data = new char[fileSize];
-
-    DWORD dwBytes = 0; //読み込み位置
-
-    ReadFile(
-        hFile,     //ファイルハンドル
-        data,      //データを入れる変数
-        fileSize,  //読み込むサイズ
-        &dwBytes,  //読み込んだサイズ
-        NULL);     //オーバーラップド構造体（今回は使わない）
-    CloseHandle(hFile);
-
-    int* iArray = new int[fileSize];
-
-    ////データを整数に変換して読み込み
-    //char* value = strtok(data, ","); //コンマ区切りになってるから
-    //int index = 0;
-
-    //for (int x = 0; x < XSIZE; x++)
-    //    for (int z = 0; z < ZSIZE; z++)
-    //    {
-    //        iArray[index] = atoi(value);
-    //    }
+        for (int x = 0; x < XSIZE; x++) {
+            for (int z = 0; z < ZSIZE; z++) {
+                inputFile.read((char*)&table_[x][z], sizeof(BLOCKHEIGHT));
+            }
+        }
+        inputFile.close();
+    }
 }
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
