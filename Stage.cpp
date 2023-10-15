@@ -292,9 +292,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
     return FALSE;
 }
 
-//Save(文字列var(まだ))
-/*
-* void Stage::Save()
+//Save(文字列var(完成))
+
+/*void Stage::Save()
 {
     char fileName[MAX_PATH] = "SaveData.map";
 
@@ -328,7 +328,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-    std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+    //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
     std::string Stagedata;
 
     for (int z = 0; z < ZSIZE; z++)
@@ -358,8 +358,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
     );
     CloseHandle(hFile);
 
-}
-*/
+}*/
+
 
 //Load(文字列var(まだ))
 /*
