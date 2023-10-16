@@ -55,6 +55,18 @@ public:
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     //BOOL MenuProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
 
+    /// <summary>
+    /// ファイルのセーブ
+    /// </summary>
     void Save();
+
+    /// <summary>
+    /// ファイルのロード
+    /// </summary>
     void Load();
+
+    /// <summary>
+    /// 一括削除
+    /// </summary>
+    void Bulk_Deletion(int startX, int startZ, int endX, int endZ);
 };

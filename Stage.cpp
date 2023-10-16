@@ -9,6 +9,12 @@
 #include <cstring>
 #include <sstream>
 
+using std::ifstream;
+using std::ofstream;
+using std::fstream;
+using std::stringstream;
+using std::string;
+
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
@@ -189,8 +195,8 @@ void Stage::SetBlockHeight(int _x, int _z, int _height)
 void Stage::Save()
 {
     char fileName[MAX_PATH] = "SaveData.map";
-    std::string buffer;
-    std::stringstream oss;
+    string buffer;
+    stringstream oss;
 
 
     //「ファイルを保存」　ダイアログの設定
@@ -207,7 +213,8 @@ void Stage::Save()
     //ファイルに保存
     if (GetSaveFileName(&ofn))
     {
-        std::fstream outputFile(fileName, std::ios::binary | std::ios::out);
+        fstream outputFile(fileName, std::ios::binary | std::ios::out);
+
         for (int x = 0; x < XSIZE; x++)
         {
             for (int z = 0; z < ZSIZE; z++)
@@ -223,11 +230,12 @@ void Stage::Save()
 void Stage::Load()
 {
     char fileName[MAX_PATH] = "SaveData.map";
-    std::string buffer;
-    std::stringstream oss;
+    string buffer;
+    stringstream oss;
 
     //「ファイルを保存」　ダイアログの設定
-    OPENFILENAME ofn; {
+    OPENFILENAME ofn; 
+    {
         ZeroMemory(&ofn, sizeof(ofn));
         ofn.lStructSize = sizeof(OPENFILENAME);
         ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0");
@@ -241,7 +249,7 @@ void Stage::Load()
     //ファイルを開く
     if (GetOpenFileName(&ofn))
     {
-        std::fstream inputFile(fileName, std::ios::binary | std::ios::in);
+        fstream inputFile(fileName, std::ios::binary | std::ios::in);
 
         for (int x = 0; x < XSIZE; x++)
         {
@@ -253,6 +261,8 @@ void Stage::Load()
         inputFile.close();
     }
 }
+
+//void Stage::Bulk_Deletion()
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
