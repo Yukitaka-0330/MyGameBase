@@ -262,7 +262,16 @@ void Stage::Load()
     }
 }
 
-//void Stage::Bulk_Deletion()
+void Stage::Bulk_Deletion(int startX, int startZ, int endX, int endZ, int newHeight)
+{
+    for(int x = startX; x <= endX; x++)
+    {
+        for (int z = startZ; z <= endZ; z++)
+        {
+            SetBlockHeight(x, z, newHeight);
+        }
+    }
+}
 
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
@@ -298,6 +307,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         {
             mode_ = 2;
         } 
+
+
     }
     return FALSE;
 }
