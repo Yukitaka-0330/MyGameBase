@@ -100,9 +100,9 @@ void Stage::Update()
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
 
-    for (int x = 0; x < 15; x++)
+    for (int x = 0; x < XSIZE; x++)
     {
-        for (int z = 0; z < 15; z++) 
+        for (int z = 0; z < ZSIZE; z++) 
         {
             for (int y = 0; y < table_[x][z].height + 1; y++)
             {
@@ -147,6 +147,15 @@ void Stage::Update()
      case 2://RADIO_CHANGE
          SetBlock(posX, posZ, (BLOCKTYPE)select_);
          break;
+
+     case 3: //ALL_Delete
+         for (int x = 0; x < XSIZE; x++)
+         {
+             for (int z = 0; z < ZSIZE; z++)
+             {
+                 SetBlockHeight(x, z, 0);
+             }
+         }
     }
 
 }
@@ -262,17 +271,6 @@ void Stage::Load()
     }
 }
 
-void Stage::Bulk_Deletion(int startX, int startZ, int endX, int endZ, int newHeight)
-{
-    for(int x = startX; x <= endX; x++)
-    {
-        for (int z = startZ; z <= endZ; z++)
-        {
-            SetBlockHeight(x, z, newHeight);
-        }
-    }
-}
-
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
     switch (msg)
@@ -308,6 +306,10 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             mode_ = 2;
         } 
 
+        if (LOWORD(wp) == IDC_RADIO_ALLDELETE)
+        {
+            mode_ = 3;
+        }
 
     }
     return FALSE;

@@ -65,8 +65,4 @@ public:
     /// </summary>
     void Load();
 
-    /// <summary>
-    /// ˆêŠ‡íœ
-    /// </summary>
-    void Bulk_Deletion(int startX, int startZ, int endX, int endZ, int newHeight);
 };
