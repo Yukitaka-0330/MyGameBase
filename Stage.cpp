@@ -271,6 +271,7 @@ void Stage::Load()
     }
 }
 
+
 BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 {
     switch (msg)
