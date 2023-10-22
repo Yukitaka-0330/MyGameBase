@@ -317,7 +317,6 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 }
 
 //Save(文字列var(完成))
-
 /*void Stage::Save()
 {
     char fileName[MAX_PATH] = "SaveData.map";
@@ -385,70 +384,76 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 }*/
 
 
-//Load(文字列var(まだ))
-/*
-  void Stage::Load()
+//Load(文字列var(不具合あり))
+/*void Stage::Load()
 {
-    char fileName[MAX_PATH] = "SaveData.map";
-
-    //「ファイルを開く」　ダイアログの設定
-    OPENFILENAME ofn;
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")
-        TEXT("すべてのファイル(*.*)\0*.*\0\0");
-    ofn.lpstrFile = fileName;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_FILEMUSTEXIST;
-    ofn.lpstrDefExt = "map";
+    char fileName[MAX_PATH] = "SaveData.map";  //ファイル名を入れる変数
+    //「ファイルを開く」ダイアログの設定
+    OPENFILENAME ofn;                         	//名前をつけて開くダイアログの設定用構造体
+    ZeroMemory(&ofn, sizeof(ofn));            	//構造体初期化
+    ofn.lStructSize = sizeof(OPENFILENAME);   	//構造体のサイズ
+    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")        //─┬ファイルの種類
+        TEXT("すべてのファイル(*.*)\0*.*\0\0");                   //─┘
+    ofn.lpstrFile = fileName;               	//ファイル名
+    ofn.nMaxFile = MAX_PATH;               	//パスの最大文字数
+    ofn.Flags = OFN_FILEMUSTEXIST;   		//フラグ（同名ファイルが存在したら上書き確認）
+    ofn.lpstrDefExt = "map";                  	//デフォルト拡張子
 
     //「ファイルを開く」ダイアログ
     BOOL selFile;
     selFile = GetOpenFileName(&ofn);
-
     //キャンセルしたら中断
     if (selFile == FALSE) return;
-
 
     HANDLE hFile;        //ファイルのハンドル
     hFile = CreateFile(
         fileName,                 //ファイル名
-        GENERIC_READ,           //アクセスモード（読み込み専用）
+        GENERIC_READ,           //アクセスモード（書き込み用）
         0,                      //共有（なし）
         NULL,                   //セキュリティ属性（継承しない）
         OPEN_EXISTING,           //作成方法
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-
+    std::string LoadData;
     //ファイルのサイズを取得
     DWORD fileSize = GetFileSize(hFile, NULL);
-
     //ファイルのサイズ分メモリを確保
-    char* data;
-    data = new char[fileSize];
-
+    char* Data;
+    Data = new char[fileSize];
     DWORD dwBytes = 0; //読み込み位置
-
     ReadFile(
         hFile,     //ファイルハンドル
-        data,      //データを入れる変数
+        Data,      //データを入れる変数
         fileSize,  //読み込むサイズ
         &dwBytes,  //読み込んだサイズ
         NULL);     //オーバーラップド構造体（今回は使わない）
-    CloseHandle(hFile);
 
-    int* iArray = new int[fileSize];
-
-    //データを整数に変換して読み込み
-    char* value = strtok(data, ","); //コンマ区切りになってるから
-    int index = 0;
-
-    for (int x = 0; x < XSIZE; x++)
-        for (int z = 0; z < ZSIZE; z++)
+    char* nextToken{};
+    char* token = strtok_s(Data, ",", &nextToken); // カンマで文字列を分割
+    int countheight = 0;
+    int counttype = 0;
+    while (token != NULL)
+    {
+        if (countheight >= XSIZE * ZSIZE)
         {
-            iArray[index] = atoi(value);
+            break;  // データが多すぎる場合は終了
         }
-}
 
-*/
+        if (counttype >= XSIZE * ZSIZE)
+        {
+            break;  // データが多すぎる場合は終了
+        }
+
+        int height_ = atoi(token);
+        table_[countheight / XSIZE][countheight % ZSIZE].height = height_;
+        token = strtok_s(NULL, ",", &nextToken); // 次のトークンを取得
+        countheight++;
+
+        int type_ = atoi(token);
+        table_[counttype / XSIZE][counttype % ZSIZE].blocks = type_;
+        token = strtok_s(NULL, ",", &nextToken); // 次のトークンを取得
+        counttype++;
+    }
+    CloseHandle(hFile);
+}*/
