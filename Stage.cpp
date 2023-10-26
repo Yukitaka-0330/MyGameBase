@@ -154,8 +154,19 @@ void Stage::Update()
              for (int z = 0; z < ZSIZE; z++)
              {
                  SetBlockHeight(x, z, 0);
+                 SetBlock(x, z, DEFAULT);
              }
          }
+
+     case 4://BULK_CHANGE
+         for (int x = 0; x < XSIZE; x++)
+         {
+           for (int z = 0; z < ZSIZE; z++)
+           {
+               SetBlock(x, z, (BLOCKTYPE)select_);
+           }
+         }
+                 
     }
 
 }
@@ -310,6 +321,11 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         if (LOWORD(wp) == IDC_RADIO_ALLDELETE)
         {
             mode_ = 3;
+        }
+
+        if (LOWORD(wp) == IDC_BULK_CHANGE)
+        {
+            mode_ = 4;
         }
 
     }
