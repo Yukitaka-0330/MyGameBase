@@ -11,8 +11,8 @@
 #define IDC_COMBO2                      1012
 #define IDC_RADIO_ALLDOWN               1013
 #define IDC_RADIO_ALLDELETE             1013
-#define IDC_                            1014
 #define IDC_BULK_CHANGE                 1014
+#define IDC_BUTTON1                     1015
 #define ID_40001                        40001
 #define ID_40002                        40002
 #define ID_40003                        40003
@@ -27,7 +27,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        104
 #define _APS_NEXT_COMMAND_VALUE         40008
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1016
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

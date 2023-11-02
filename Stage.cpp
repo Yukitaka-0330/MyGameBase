@@ -148,17 +148,7 @@ void Stage::Update()
          SetBlock(posX, posZ, (BLOCKTYPE)select_);
          break;
 
-     case 3: //ALL_Delete
-         for (int x = 0; x < XSIZE; x++)
-         {
-             for (int z = 0; z < ZSIZE; z++)
-             {
-                 SetBlockHeight(x, z, 0);
-                 SetBlock(x, z, DEFAULT);
-             }
-         }
-
-     case 4://BULK_CHANGE
+     case 3://BULK_CHANGE
          for (int x = 0; x < XSIZE; x++)
          {
            for (int z = 0; z < ZSIZE; z++)
@@ -320,7 +310,14 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 
         if (LOWORD(wp) == IDC_RADIO_ALLDELETE)
         {
-            mode_ = 3;
+            for (int x = 0; x < XSIZE; x++)
+            {
+                for (int z = 0; z < ZSIZE; z++)
+                {
+                    SetBlockHeight(x, z, 0);
+                    SetBlock(x, z, DEFAULT);
+                }
+            }
         }
 
         if (LOWORD(wp) == IDC_BULK_CHANGE)
